@@ -2,8 +2,6 @@ package com.serkanet.trial.ringeventlist.controllers {
 	import com.serkanet.trial.ringeventlist.models.EventListProxy;
 	import com.serkanet.trial.ringeventlist.models.vo.EventVO;
 
-	import mx.collections.ArrayCollection;
-
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 
@@ -18,7 +16,8 @@ package com.serkanet.trial.ringeventlist.controllers {
 			var truncatedEvents:Number = 5;
 
 			if (eventListProxy.numEvents < maxEvents) {
-				eventListProxy.events.addItem(new EventVO("777", "XXX", "foobar", 13));
+				eventListProxy.events.addItem(new EventVO("777", Math.floor(Math.random() * 100) + 10, "XXX", "foobar", 13));
+				eventListProxy.events.refresh();
 			} else {
 				while (eventListProxy.numEvents > truncatedEvents) {
 					eventListProxy.events.removeItemAt(truncatedEvents);

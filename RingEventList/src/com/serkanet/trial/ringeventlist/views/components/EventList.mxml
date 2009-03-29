@@ -17,12 +17,28 @@
 
 	<mx:DataGrid id="eventsDataGrid"
 		width="100%" height="100%"
+		draggableColumns="false"
 		dataProvider="{events}">
 		<mx:columns>
-			<mx:DataGridColumn dataField="id" headerText="Id"/>
-			<mx:DataGridColumn dataField="code" headerText="Code"/>
-			<mx:DataGridColumn dataField="name" headerText="Name"/>
-			<mx:DataGridColumn dataField="numCompetitors" headerText="Competitors"/>
+			<mx:DataGridColumn
+				dataField="id"
+				headerText="Id"
+				width="30"/>
+			<mx:DataGridColumn
+				dataField="order"
+				headerText="Order"
+				width="55"/>
+			<mx:DataGridColumn
+				dataField="code"
+				headerText="Code"
+				width="50"/>
+			<mx:DataGridColumn
+				dataField="name"
+				headerText="Name"/>
+			<mx:DataGridColumn
+				dataField="numCompetitors"
+				headerText="#"
+				width="30"/>
 		</mx:columns>
 	</mx:DataGrid>
 
