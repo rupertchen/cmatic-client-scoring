@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	layout="absolute"
+	creationComplete="facade.startup(this)" xmlns:components="com.serkanet.trial.ringeventlist.views.components.*">
+
+	<mx:Script>
+		<![CDATA[
+			import com.serkanet.trial.ringeventlist.ApplicationFacade;
+			private var facade:ApplicationFacade = ApplicationFacade.getInstance();
+		]]>
+	</mx:Script>
+
+	<components:EventList id="eventList2"
+		x="75" y="45"
+		width="400" height="200"/>
+</mx:Application>

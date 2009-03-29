@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+	title="Event List"
+	status="{events.length}"
+	layout="absolute">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+
+			public static const REFRESH:String = "refresh";
+
+			[Bindable]
+			public var events:ArrayCollection;
+		]]>
+	</mx:Script>
+
+	<mx:DataGrid id="eventsDataGrid"
+		width="100%" height="100%"
+		dataProvider="{events}">
+		<mx:columns>
+			<mx:DataGridColumn dataField="id" headerText="Id"/>
+			<mx:DataGridColumn dataField="code" headerText="Code"/>
+			<mx:DataGridColumn dataField="name" headerText="Name"/>
+			<mx:DataGridColumn dataField="numCompetitors" headerText="Competitors"/>
+		</mx:columns>
+	</mx:DataGrid>
+
+	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="Refresh" click="dispatchEvent(new Event(REFRESH))"/>
+	</mx:ControlBar>
+</mx:Panel>
