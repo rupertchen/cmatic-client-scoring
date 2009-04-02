@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
 	layout="absolute"
-	creationComplete="facade.startup(this)" xmlns:components="com.serkanet.trial.ringeventlist.views.components.*">
+	xmlns:views="com.serkanet.trial.ringeventlist.views.components.*"
+	creationComplete="facade.startup(this)">
 
 	<mx:Script>
 		<![CDATA[
@@ -10,7 +11,7 @@
 		]]>
 	</mx:Script>
 
-	<components:EventList id="eventList2"
+	<views:EventList id="eventList2"
 		x="75" y="45"
 		width="400" height="200"/>
 </mx:Application>
