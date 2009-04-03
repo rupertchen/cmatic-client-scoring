@@ -8,6 +8,9 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 		public var name:String;
 		public var score1:Number;
 		public var score2:Number;
+		public var time:Number;
+		public var timeDeduction:Number;
+		public var otherDeduction:Number;
 		public var finalScore:Number;
 
 		public function ScoringVo(
@@ -16,6 +19,7 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 			name:String,
 			score1:Number,
 			score2:Number,
+			time:Number,
 			finalScore:Number
 		) {
 			this.id = id;
@@ -23,6 +27,9 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 			this.name = name;
 			this.score1 = score1;
 			this.score2 = score2;
+			this.time = time;
+			this.timeDeduction = 0;
+			this.otherDeduction = 0;
 			this.finalScore = finalScore;
 		}
 	}

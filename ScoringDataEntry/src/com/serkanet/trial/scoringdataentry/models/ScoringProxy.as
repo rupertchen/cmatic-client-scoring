@@ -25,12 +25,23 @@ package com.serkanet.trial.scoringdataentry.models {
 
 
 		public function computeFinalScore():void {
-			scoring.finalScore = (scoring.score1 + scoring.score2) / 2;
+			scoring.finalScore = meritedScore - totalDeductions;
+		}
+
+
+		private function get meritedScore():Number {
+			return (scoring.score1 + scoring.score2) / 2;
+		}
+
+
+		private function get totalDeductions():Number {
+			return scoring.timeDeduction + scoring.otherDeduction;
 		}
 
 
 		public function save():void {
 			trace("Saving scoring (" + scoring.id + ") back to server with final score (" + scoring.finalScore + ")");
 		}
+
 	}
 }
