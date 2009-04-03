@@ -1,7 +1,7 @@
 package com.serkanet.trial.scoringdataentry.views {
 	import com.serkanet.trial.scoringdataentry.models.EventScoringProxy;
 	import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
-	import com.serkanet.trial.scoringdataentry.views.components.CommitScoring;
+	import com.serkanet.trial.scoringdataentry.views.components.CommitEntry;
 	import com.serkanet.trial.scoringdataentry.views.components.EventScoring;
 
 	import flash.events.Event;
@@ -22,12 +22,12 @@ package com.serkanet.trial.scoringdataentry.views {
 			eventScoringProxy = facade.retrieveProxy(EventScoringProxy.NAME) as EventScoringProxy;
 			eventScoring.scorings = eventScoringProxy.scorings;
 
-			eventScoring.addEventListener(CommitScoring.COMMIT_SCORING, onCommitScoring);
+			eventScoring.addEventListener(CommitEntry.COMMIT_SCORING, onCommitScoring);
 		}
 
 
 		private function onCommitScoring(event:Event):void {
-			var commitScoring:CommitScoring = event.target as CommitScoring;
+			var commitScoring:CommitEntry = event.target as CommitEntry;
 			var scoring:ScoringVo = commitScoring.data as ScoringVo;
 			var proxy:EventScoringProxy = facade.retrieveProxy(EventScoringProxy.NAME) as EventScoringProxy;
 			proxy.saveScoring(scoring);

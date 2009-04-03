@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:NumericStepper xmlns:mx="http://www.adobe.com/2006/mxml"
+	minimum="0" maximum="11" stepSize="0.05" maxChars="5"
+	textAlign="right"/>

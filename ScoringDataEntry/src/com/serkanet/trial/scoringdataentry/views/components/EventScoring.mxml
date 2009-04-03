@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
-	width="400" height="300"
+	width="600" height="300"
 	layout="absolute">
 
 	<mx:Script>
 		<![CDATA[
+			import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
 			import mx.collections.ArrayCollection;
 
 			[Bindable]
 			public var scorings:ArrayCollection;
+
+			private function getDataTipForName(scoring:ScoringVo):String {
+				return scoring.name + " (" + scoring.id + ")";
+			}
 		]]>
 	</mx:Script>
 
@@ -29,21 +34,32 @@
 			<mx:DataGridColumn
 				dataField="name"
 				headerText="Name"
-				editable="false"/>
+				editable="false"
+				showDataTips="true" dataTipFunction="getDataTipForName"/>
 			<mx:DataGridColumn
 				dataField="score1"
-				headerText="Score 1"/>
+				headerText="Score 1"
+				width="65"
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"
+				itemEditor="com.serkanet.trial.scoringdataentry.views.components.GivenPointsItemEditor"
+				editorDataField="value"/>
 			<mx:DataGridColumn
 				dataField="score2"
-				headerText="Score 2"/>
+				headerText="Score 2"
+				width="65"
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"
+				itemEditor="com.serkanet.trial.scoringdataentry.views.components.GivenPointsItemEditor"
+				editorDataField="value"/>
 			<mx:DataGridColumn
 				dataField="finalScore"
 				headerText="Final Score"
-				editable="false"/>
-			<mx:DataGridColumn
-				width="50"
+				width="70"
 				editable="false"
-				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.CommitScoring">
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"/>
+			<mx:DataGridColumn
+				width="10"
+				editable="false"
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.CommitEntry">
 			</mx:DataGridColumn>
 		</mx:columns>
 	</mx:DataGrid>

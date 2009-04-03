@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
 	click="commit()"
-	backgroundColor="0xFF00FF">
+	backgroundColor="0xFF00FF"
+	buttonMode="true" useHandCursor="true">
 	<mx:Script>
 		<![CDATA[
 
