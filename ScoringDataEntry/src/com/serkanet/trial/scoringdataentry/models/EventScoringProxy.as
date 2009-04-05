@@ -2,7 +2,6 @@ package com.serkanet.trial.scoringdataentry.models {
 	import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
 
 	import mx.collections.ArrayCollection;
-	import mx.collections.ListCollectionView;
 	import mx.collections.Sort;
 	import mx.collections.SortField;
 	import mx.events.CollectionEvent;
@@ -15,7 +14,6 @@ package com.serkanet.trial.scoringdataentry.models {
 	public class EventScoringProxy extends Proxy {
 
 		public static const NAME:String = "EventScoring";
-
 
 		public function EventScoringProxy() {
 			super(NAME, new ArrayCollection());
@@ -63,6 +61,12 @@ package com.serkanet.trial.scoringdataentry.models {
 		}
 
 
+		private function addScoring(vo:ScoringVo):void {
+			scorings.addItem(vo);
+			facade.registerProxy(new ScoringProxy(vo));
+		}
+
+
 		public function saveScorings():void {
 			for each (var scoring:ScoringVo in scorings) {
 				saveScoring(scoring);
@@ -70,15 +74,31 @@ package com.serkanet.trial.scoringdataentry.models {
 		}
 
 
-		private function addScoring(vo:ScoringVo):void {
-			scorings.addItem(vo);
-			facade.registerProxy(new ScoringProxy(vo));
-		}
-
-
 		public function saveScoring(scoring:ScoringVo):void {
 			getScoringProxy(scoring.id).save();
 		}
 
+
+		public function randomizeCompetitors():void {
+			// I don't think this shuffling is uniformly random, but it's good enough for now
+			var max_index:Number = scorings.length - 1 ;
+			for (var transpose_index:Number = 0; transpose_index < scorings.length; transpose_index++) {
+				var random:Number = Math.round(Math.random() * max_index);
+				var scoring1:ScoringVo = scorings[transpose_index] as ScoringVo;
+				var scoring2:ScoringVo = scorings[random] as ScoringVo;
+				var oldOrder1:Number = scoring1.order;
+				var oldOrder2:Number = scoring2.order;
+				scoring1.order = oldOrder2;
+				scoring2.order = oldOrder1;
+
+				// TODO: Figure out why calling itemUpdate() like this does not cause the panel to update its view
+				// Tutorials claim you should use this, but it does not cause the COLLECTION_CHANGE event to fire which
+				// appears to be what the DataGrid is listening for. As a work around fire off the COLLECTION_CHANGE
+				// explicitly
+//				scorings.itemUpdated(scoring1);
+//				scorings.itemUpdated(scoring2);
+			}
+			scorings.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.UPDATE));
+		}
 	}
 }

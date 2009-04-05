@@ -21,6 +21,11 @@ package com.serkanet.trial.scoringdataentry.views {
 		}
 
 
+		public function get eventScoringPanel():EventScoringPanel {
+			return viewComponent as EventScoringPanel;
+		}
+
+
 		override public function onRegister():void {
 			eventScoringProxy = facade.retrieveProxy(EventScoringProxy.NAME) as EventScoringProxy;
 
@@ -28,7 +33,8 @@ package com.serkanet.trial.scoringdataentry.views {
 			eventScoringPanel.scorings = eventScoringProxy.scorings;
 
 			eventScoringPanel.addEventListener(CommitEntry.COMMIT_SCORING, onCommitScoring);
-			eventScoringPanel.addEventListener(EventScoringPanel.SAVE, onSave);
+			eventScoringPanel.addEventListener(EventScoringPanel.SAVE_SCORINGS, onSaveScorings);
+			eventScoringPanel.addEventListener(EventScoringPanel.RANDOMIZE_COMPETITORS, onRandomizeCompetitors);
 		}
 
 
@@ -40,13 +46,13 @@ package com.serkanet.trial.scoringdataentry.views {
 		}
 
 
-		private function onSave(event:Event):void {
+		private function onSaveScorings(event:Event):void {
 			eventScoringProxy.saveScorings();
 		}
 
 
-		public function get eventScoringPanel():EventScoringPanel {
-			return viewComponent as EventScoringPanel;
+		private function onRandomizeCompetitors(event:Event):void {
+			eventScoringProxy.randomizeCompetitors();
 		}
 
 	}

@@ -5,13 +5,16 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.events.DataGridEvent;
 			import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
 
 			import mx.collections.ArrayCollection;
 
 
-			public static const SAVE:String = "save";
+			public static const SAVE_SCORINGS:String = "saveScorings";
+			public static const RANDOMIZE_COMPETITORS:String = "randomizeCompetitors";
 
+			public static const ORDER_COLUMN_INDEX:int = 1;
 
 			[Bindable]
 			public var scorings:ArrayCollection;
@@ -60,7 +63,7 @@
 			<mx:DataGridColumn
 				dataField="order"
 				headerText="Order"
-				editable="false"/>
+				editable="true"/>
 			<mx:DataGridColumn
 				dataField="name"
 				headerText="Name"
@@ -102,6 +105,7 @@
 	</mx:DataGrid>
 
 	<mx:ControlBar horizontalAlign="right">
-		<mx:Button label="Save Scores" click="sendEvent(SAVE)"/>
+		<mx:Button label="Randomize Competitor Order" click="sendEvent(RANDOMIZE_COMPETITORS)"/>
+		<mx:Button label="Save Scores" click="sendEvent(SAVE_SCORINGS)"/>
 	</mx:ControlBar>
 </mx:Panel>
