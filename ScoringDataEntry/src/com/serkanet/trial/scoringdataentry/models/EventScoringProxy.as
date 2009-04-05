@@ -2,6 +2,7 @@ package com.serkanet.trial.scoringdataentry.models {
 	import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
 
 	import mx.collections.ArrayCollection;
+	import mx.collections.ListCollectionView;
 	import mx.collections.Sort;
 	import mx.collections.SortField;
 	import mx.events.CollectionEvent;
@@ -59,6 +60,13 @@ package com.serkanet.trial.scoringdataentry.models {
 			addScoring(new ScoringVo("56", 2, "Jane", 5.5, 5.5, 23, 4.5));
 			addScoring(new ScoringVo("928", 3, "Mark", 6, 5.5, 65, 4.4));
 			addScoring(new ScoringVo("235", 4, "Michelle", 5, 7, 60, 4.3));
+		}
+
+
+		public function saveScorings():void {
+			for each (var scoring:ScoringVo in scorings) {
+				saveScoring(scoring);
+			}
 		}
 
 

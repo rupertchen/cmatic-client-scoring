@@ -2,7 +2,7 @@ package com.serkanet.trial.scoringdataentry.views {
 	import com.serkanet.trial.scoringdataentry.models.EventScoringProxy;
 	import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
 	import com.serkanet.trial.scoringdataentry.views.components.CommitEntry;
-	import com.serkanet.trial.scoringdataentry.views.components.EventScoring;
+	import com.serkanet.trial.scoringdataentry.views.components.EventScoringPanel;
 
 	import flash.events.Event;
 
@@ -18,24 +18,35 @@ package com.serkanet.trial.scoringdataentry.views {
 
 		public function EventScoringMediator(viewComponent:Object) {
 			super(NAME, viewComponent);
+		}
 
+
+		override public function onRegister():void {
 			eventScoringProxy = facade.retrieveProxy(EventScoringProxy.NAME) as EventScoringProxy;
-			eventScoring.scorings = eventScoringProxy.scorings;
 
-			eventScoring.addEventListener(CommitEntry.COMMIT_SCORING, onCommitScoring);
+			// TODO: This is how the fake data is being injected
+			eventScoringPanel.scorings = eventScoringProxy.scorings;
+
+			eventScoringPanel.addEventListener(CommitEntry.COMMIT_SCORING, onCommitScoring);
+			eventScoringPanel.addEventListener(EventScoringPanel.SAVE, onSave);
 		}
 
 
 		private function onCommitScoring(event:Event):void {
+			// TODO: Is there any reason to provide an individual save?
 			var commitScoring:CommitEntry = event.target as CommitEntry;
 			var scoring:ScoringVo = commitScoring.data as ScoringVo;
-			var proxy:EventScoringProxy = facade.retrieveProxy(EventScoringProxy.NAME) as EventScoringProxy;
-			proxy.saveScoring(scoring);
+			eventScoringProxy.saveScoring(scoring);
 		}
 
 
-		public function get eventScoring():EventScoring {
-			return viewComponent as EventScoring;
+		private function onSave(event:Event):void {
+			eventScoringProxy.saveScorings();
+		}
+
+
+		public function get eventScoringPanel():EventScoringPanel {
+			return viewComponent as EventScoringPanel;
 		}
 
 	}

@@ -9,8 +9,13 @@
 
 			import mx.collections.ArrayCollection;
 
+
+			public static const SAVE:String = "save";
+
+
 			[Bindable]
 			public var scorings:ArrayCollection;
+
 
 			private function getDataTipForName(scoring:ScoringVo):String {
 				return scoring.name + " (" + scoring.id + ")";
@@ -35,6 +40,10 @@
 					+ seconds.toFixed(1);
 			}
 
+
+			private function sendEvent(eventName:String):void {
+				dispatchEvent(new Event(eventName, true));
+			}
 		]]>
 	</mx:Script>
 
@@ -93,7 +102,6 @@
 	</mx:DataGrid>
 
 	<mx:ControlBar horizontalAlign="right">
-		<mx:Button label="Foo"/>
-		<mx:Button label="Bar"/>
+		<mx:Button label="Save Scores" click="sendEvent(SAVE)"/>
 	</mx:ControlBar>
 </mx:Panel>
