@@ -12,15 +12,21 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 		public var timeDeduction:Number;
 		public var otherDeduction:Number;
 		public var finalScore:Number;
+		public var tieBreaker1:Number;
+		public var tieBreaker2:Number;
+		public var tieBreaker3:Number;
 
 		public function ScoringVo(
 			id:String,
 			order:Number,
 			name:String,
-			score1:Number,
-			score2:Number,
-			time:Number,
-			finalScore:Number
+			score1:Number = 0,
+			score2:Number = 0,
+			time:Number = 0,
+			finalScore:Number = 0,
+			tieBreaker1:Number = 0,
+			tieBreaker2:Number = 0,
+			tieBreaker3:Number = 0
 		) {
 			this.id = id;
 			this.order = order;
@@ -31,6 +37,9 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 			this.timeDeduction = 0;
 			this.otherDeduction = 0;
 			this.finalScore = finalScore;
+			this.tieBreaker1 = tieBreaker1;
+			this.tieBreaker2 = tieBreaker2;
+			this.tieBreaker3 = tieBreaker3;
 		}
 	}
 }

@@ -5,6 +5,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.dataGridClasses.DataGridColumn;
 			import mx.events.DataGridEvent;
 			import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
 
@@ -27,6 +28,15 @@
 
 			private function timeLabelFunction(item:ScoringVo, column:DataGridColumn):String {
 				return formatTime(item[column.dataField]);
+			}
+
+
+			private function finalScoreDataTipFunction(item:ScoringVo):String {
+				return item.finalScore
+					+ "\n(" + item.tieBreaker1
+					+ "/" + item.tieBreaker2
+					+ "/" + item.tieBreaker3
+					+ ")";
 			}
 
 
@@ -93,8 +103,9 @@
 			<mx:DataGridColumn
 				dataField="finalScore"
 				headerText="Final Score"
-				width="70"
+				width="80"
 				editable="false"
+				showDataTips="true" dataTipFunction="finalScoreDataTipFunction"
 				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"/>
 			<mx:DataGridColumn
 				width="10"

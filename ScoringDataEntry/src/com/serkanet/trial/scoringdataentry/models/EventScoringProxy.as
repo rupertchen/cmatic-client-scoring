@@ -40,7 +40,7 @@ package com.serkanet.trial.scoringdataentry.models {
 					for each (var propertyChangeEvent:PropertyChangeEvent in event.items) {
 						if (propertyChangeEvent.newValue != propertyChangeEvent.oldValue) {
 							var scoring:ScoringVo = propertyChangeEvent.source as ScoringVo;
-							getScoringProxy(scoring.id).computeFinalScore();
+							getScoringProxy(scoring.id).computeScore();
 						}
 					}
 					break;
