@@ -8,6 +8,9 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 		public var name:String;
 		public var score1:Number;
 		public var score2:Number;
+		public var score3:Number;
+		public var score4:Number;
+		public var score5:Number;
 		public var time:Number;
 		public var timeDeduction:Number;
 		public var otherDeduction:Number;
@@ -23,6 +26,9 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 			name:String,
 			score1:Number = 0,
 			score2:Number = 0,
+			score3:Number = 0,
+			score4:Number = 0,
+			score5:Number = 0,
 			time:Number = 0,
 			timeDeduction:Number = 0,
 			otherDeduction:Number = 0,
@@ -36,6 +42,9 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 			this.name = name;
 			this.score1 = score1;
 			this.score2 = score2;
+			this.score3 = score3;
+			this.score4 = score4;
+			this.score5 = score5;
 			this.time = time;
 			this.timeDeduction = timeDeduction;
 			this.otherDeduction = otherDeduction;

@@ -64,19 +64,56 @@ package com.serkanet.trial.scoringdataentry.models {
 
 
 		private function get lowerInvalidScore():Number {
-			// TODO: remove 0's from consideration
-			return Math.min(scoring.score1, scoring.score2);
+			var min:Number = NaN;
+			for each (var score:Number in scores) {
+				if (score == 0) {
+					continue;
+				}
+				if (isNaN(min)) {
+					min = score;
+				} else {
+					min = Math.min(min, score);
+				}
+			}
+
+			return min;
 		}
 
 
 		private function get upperInvalidScore():Number {
-			// TODO: remove 0's from consideration
-			return Math.max(scoring.score1, scoring.score2);
+			var max:Number = NaN;
+			for each (var score:Number in scores) {
+				if (score == 0) {
+					continue;
+				}
+				if (isNaN(max)) {
+					max = score;
+				} else {
+					max = Math.max(max, score);
+				}
+			}
+
+			return max;
 		}
 
 
 		private function get meritedScore():Number {
-			return (scoring.score1 + scoring.score2) / 2;
+			var nonZeroCount:Number = 0;
+			var sum:Number = 0;
+			for each (var score:Number in scores) {
+				if (score == 0) {
+					continue;
+				}
+				nonZeroCount += 1;
+				sum += score;
+			}
+
+			if (nonZeroCount < 3) {
+				// Not enough numbers to determine a score.
+				return NaN;
+			}
+
+			return (sum - lowerInvalidScore - upperInvalidScore) / (nonZeroCount - 2);
 		}
 
 
@@ -95,6 +132,9 @@ package com.serkanet.trial.scoringdataentry.models {
 			switch (event.property) {
 				case "score1":
 				case "score2":
+				case "score3":
+				case "score4":
+				case "score5":
 				case "timeDeduction":
 				case "otherDeduction":
 					computeScore();
@@ -106,5 +146,15 @@ package com.serkanet.trial.scoringdataentry.models {
 			}
 		}
 
+
+		private function get scores():Array {
+			return [
+				scoring.score1,
+				scoring.score2,
+				scoring.score3,
+				scoring.score4,
+				scoring.score5
+			];
+		}
 	}
 }

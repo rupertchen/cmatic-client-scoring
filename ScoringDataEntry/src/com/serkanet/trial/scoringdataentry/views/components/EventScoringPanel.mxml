@@ -93,6 +93,30 @@
 				itemEditor="com.serkanet.trial.scoringdataentry.views.components.GivenPointsItemEditor"
 				editorDataField="value"/>
 			<mx:DataGridColumn
+				dataField="score3"
+				headerRenderer="mx.controls.Label"
+				headerText="Score 3"
+				width="65"
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"
+				itemEditor="com.serkanet.trial.scoringdataentry.views.components.GivenPointsItemEditor"
+				editorDataField="value"/>
+			<mx:DataGridColumn
+				dataField="score4"
+				headerRenderer="mx.controls.Label"
+				headerText="Score 4"
+				width="65"
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"
+				itemEditor="com.serkanet.trial.scoringdataentry.views.components.GivenPointsItemEditor"
+				editorDataField="value"/>
+			<mx:DataGridColumn
+				dataField="score5"
+				headerRenderer="mx.controls.Label"
+				headerText="Score 5"
+				width="65"
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"
+				itemEditor="com.serkanet.trial.scoringdataentry.views.components.GivenPointsItemEditor"
+				editorDataField="value"/>
+			<mx:DataGridColumn
 				dataField="time"
 				headerRenderer="mx.controls.Label"
 				headerText="Time"

@@ -56,10 +56,10 @@ package com.serkanet.trial.scoringdataentry.models {
 
 
 		private function initFakeData():void {
-			addScoring(new ScoringVo("123", 1, "John", 5, 5.5, 50, 0, 0));
-			addScoring(new ScoringVo("56", 2, "Jane", 5.5, 5.5, 23, 0, 0));
-			addScoring(new ScoringVo("928", 3, "Mark", 6, 5.5, 65, 0, 0));
-			addScoring(new ScoringVo("235", 4, "Michelle", 5, 7, 60, 0, 0));
+			addScoring(new ScoringVo("123", 1, "John", 5, 5.5, 3, 4, 5, 50, 0, 0));
+			addScoring(new ScoringVo("56", 2, "Jane", 5.5, 5.5, 5, 4, 3, 23, 0, 0));
+			addScoring(new ScoringVo("928", 3, "Mark", 6, 5.5, 6, 2, 3, 65, 0, 0));
+			addScoring(new ScoringVo("235", 4, "Michelle", 5, 7, 6, 3, 5, 60, 0, 0));
 		}
 
 
