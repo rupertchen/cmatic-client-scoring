@@ -1,5 +1,6 @@
 package com.serkanet.trial.scoringdataentry.controllers {
 
+	import com.serkanet.trial.scoringdataentry.models.AppConfigProxy;
 	import com.serkanet.trial.scoringdataentry.models.EventScoringProxy;
 	import com.serkanet.trial.scoringdataentry.views.EventScoringMediator;
 
@@ -7,10 +8,13 @@ package com.serkanet.trial.scoringdataentry.controllers {
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 
 
-	public class ApplicationStartupCommand extends SimpleCommand {
+	public class AppStartupCommand extends SimpleCommand {
 
 		override public function execute(notification:INotification):void {
-			trace("application start command");
+			var configProxy:AppConfigProxy = new AppConfigProxy();
+			facade.registerProxy(configProxy);
+			configProxy.retrieveConfig();
+
 			facade.registerProxy(new EventScoringProxy());
 
 			var app:ScoringDataEntryApp = notification.getBody() as ScoringDataEntryApp;

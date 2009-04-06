@@ -1,8 +1,11 @@
 package com.serkanet.trial.scoringdataentry {
 
-	import com.serkanet.trial.scoringdataentry.controllers.ApplicationStartupCommand;
+	import com.serkanet.trial.scoringdataentry.controllers.AppStartupCommand;
+	import com.serkanet.trial.scoringdataentry.controllers.FailedConfigCommand;
+	import com.serkanet.trial.scoringdataentry.controllers.PostConfigStartupCommand;
 
 	import org.puremvc.as3.patterns.facade.Facade;
+	import org.puremvc.as3.utilities.flex.config.model.ConfigProxy;
 
 
 	public class ApplicationFacade extends Facade {
@@ -20,7 +23,9 @@ package com.serkanet.trial.scoringdataentry {
 
 		override protected function initializeController():void {
 			super.initializeController();
-			registerCommand(STARTUP, ApplicationStartupCommand);
+			registerCommand(STARTUP, AppStartupCommand);
+			registerCommand(ConfigProxy.SUCCESS, PostConfigStartupCommand);
+			registerCommand(ConfigProxy.FAILURE, FailedConfigCommand);
 		}
 
 
