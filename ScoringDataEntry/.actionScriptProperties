@@ -7,6 +7,7 @@
 <libraryPathEntry kind="1" linkType="1" path="libs"/>
 </libraryPath>
 <sourceAttachmentPath>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="/Users/serka/Documents/flex_test/ScoringDataEntry/libs/as3corelib.swc" sourcepath="/Users/serka/puremvc/as3corelib-.92.1/src" useDefaultLinkType="false"/>
 <sourceAttachmentPathEntry kind="3" linkType="1" path="/Users/serka/Documents/flex_test/ScoringDataEntry/libs/PureMVC_AS3_2_0_4.swc" sourcepath="/Users/serka/puremvc/PureMVC_AS3_2_0_4/src" useDefaultLinkType="false"/>
 <sourceAttachmentPathEntry kind="3" linkType="1" path="/Users/serka/Documents/flex_test/ScoringDataEntry/libs/Utility_AS3_Flex_DeploymentConfig_1_0.swc" sourcepath="/Users/serka/puremvc/DeploymentConfig_1_0/src-standard" useDefaultLinkType="false"/>
 </sourceAttachmentPath>
