@@ -23,6 +23,8 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 			score1:Number = 0,
 			score2:Number = 0,
 			time:Number = 0,
+			timeDeduction:Number = 0,
+			otherDeduction:Number = 0,
 			finalScore:Number = 0,
 			tieBreaker1:Number = 0,
 			tieBreaker2:Number = 0,
@@ -34,8 +36,8 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 			this.score1 = score1;
 			this.score2 = score2;
 			this.time = time;
-			this.timeDeduction = 0;
-			this.otherDeduction = 0;
+			this.timeDeduction = timeDeduction;
+			this.otherDeduction = otherDeduction;
 			this.finalScore = finalScore;
 			this.tieBreaker1 = tieBreaker1;
 			this.tieBreaker2 = tieBreaker2;

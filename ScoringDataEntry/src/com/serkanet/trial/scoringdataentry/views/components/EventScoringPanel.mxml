@@ -64,23 +64,26 @@
 		dataProvider="{scorings}"
 		editable="true">
 		<mx:columns>
-			<mx:DataGridColumn
+		<!--	<mx:DataGridColumn
 				dataField="id"
 				headerText="Id"
 				editable="false"
-				visible="false"/>
+				visible="true"/>-->
 			<mx:DataGridColumn
 				dataField="order"
+				headerRenderer="mx.controls.Label"
 				headerText="#"
 				width="40"
 				editable="true"/>
 			<mx:DataGridColumn
 				dataField="name"
+				headerRenderer="mx.controls.Label"
 				headerText="Name"
 				editable="false"
 				showDataTips="true" dataTipFunction="getDataTipForName"/>
 			<mx:DataGridColumn
 				dataField="score1"
+				headerRenderer="mx.controls.Label"
 				headerText="Score 1"
 				width="65"
 				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"
@@ -88,6 +91,7 @@
 				editorDataField="value"/>
 			<mx:DataGridColumn
 				dataField="score2"
+				headerRenderer="mx.controls.Label"
 				headerText="Score 2"
 				width="65"
 				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"
@@ -95,15 +99,33 @@
 				editorDataField="value"/>
 			<mx:DataGridColumn
 				dataField="time"
+				headerRenderer="mx.controls.Label"
 				headerText="Time"
 				width="65"
 				labelFunction="timeLabelFunction"
 				itemEditor="com.serkanet.trial.scoringdataentry.views.components.TimeItemEditor"
 				editorDataField="seconds"/>
 			<mx:DataGridColumn
+				dataField="timeDeduction"
+				headerRenderer="mx.controls.Label"
+				headerText="Time Deduction"
+				width="65"
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.DeductionItemRenderer"
+				itemEditor="com.serkanet.trial.scoringdataentry.views.components.GivenPointsItemEditor"
+				editorDataField="value"/>
+			<mx:DataGridColumn
+				dataField="otherDeduction"
+				headerRenderer="mx.controls.Label"
+				headerText="Other Deduction"
+				width="65"
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.DeductionItemRenderer"
+				itemEditor="com.serkanet.trial.scoringdataentry.views.components.GivenPointsItemEditor"
+				editorDataField="value"/>
+			<mx:DataGridColumn
 				dataField="finalScore"
-				headerText="Final"
-				width="50"
+				headerRenderer="mx.controls.Label"
+				headerText="Final Score"
+				width="55"
 				editable="false"
 				showDataTips="true" dataTipFunction="finalScoreDataTipFunction"
 				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"/>
