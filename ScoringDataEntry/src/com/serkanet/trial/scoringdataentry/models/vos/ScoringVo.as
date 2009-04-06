@@ -15,6 +15,7 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 		public var tieBreaker1:Number;
 		public var tieBreaker2:Number;
 		public var tieBreaker3:Number;
+		public var needsSaving:Boolean;
 
 		public function ScoringVo(
 			id:String,
@@ -42,6 +43,7 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 			this.tieBreaker1 = tieBreaker1;
 			this.tieBreaker2 = tieBreaker2;
 			this.tieBreaker3 = tieBreaker3;
+			this.needsSaving = false;
 		}
 	}
 }

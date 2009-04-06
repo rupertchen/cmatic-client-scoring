@@ -64,11 +64,6 @@
 		dataProvider="{scorings}"
 		editable="true">
 		<mx:columns>
-		<!--	<mx:DataGridColumn
-				dataField="id"
-				headerText="Id"
-				editable="false"
-				visible="true"/>-->
 			<mx:DataGridColumn
 				dataField="order"
 				headerRenderer="mx.controls.Label"
@@ -130,10 +125,10 @@
 				showDataTips="true" dataTipFunction="finalScoreDataTipFunction"
 				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"/>
 			<mx:DataGridColumn
+				dataField="needsSaving"
 				width="10"
 				editable="false"
-				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.CommitEntry">
-			</mx:DataGridColumn>
+				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.NeedsSavingItemRenderer"/>
 		</mx:columns>
 	</mx:DataGrid>
 

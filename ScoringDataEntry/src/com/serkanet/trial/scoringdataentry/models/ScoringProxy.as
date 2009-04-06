@@ -1,6 +1,8 @@
 package com.serkanet.trial.scoringdataentry.models {
 	import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
 
+	import mx.events.PropertyChangeEvent;
+
 	import org.puremvc.as3.patterns.proxy.Proxy;
 
 
@@ -85,6 +87,23 @@ package com.serkanet.trial.scoringdataentry.models {
 
 		public function save():void {
 			trace("Saving scoring (" + scoring.id + ") back to server with final score (" + scoring.finalScore + ")");
+			scoring.needsSaving = false;
+		}
+
+
+		public function onChange(event:PropertyChangeEvent):void {
+			switch (event.property) {
+				case "score1":
+				case "score2":
+				case "timeDeduction":
+				case "otherDeduction":
+					computeScore();
+					break;
+			}
+
+			if (event.property != "needsSaving") {
+				scoring.needsSaving = true;
+			}
 		}
 
 	}

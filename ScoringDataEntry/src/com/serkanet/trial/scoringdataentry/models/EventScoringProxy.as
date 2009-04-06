@@ -35,12 +35,14 @@ package com.serkanet.trial.scoringdataentry.models {
 
 
 		private function onScoringsCollectionChange(event:CollectionEvent):void {
+			// TODO: This is the wrong place to do these updates because it'll cause a loop
+			// Get around the problem for now by filtering by property.
 			switch (event.kind) {
 				case CollectionEventKind.UPDATE:
 					for each (var propertyChangeEvent:PropertyChangeEvent in event.items) {
 						if (propertyChangeEvent.newValue != propertyChangeEvent.oldValue) {
 							var scoring:ScoringVo = propertyChangeEvent.source as ScoringVo;
-							getScoringProxy(scoring.id).computeScore();
+							getScoringProxy(scoring.id).onChange(propertyChangeEvent);
 						}
 					}
 					break;
@@ -98,6 +100,11 @@ package com.serkanet.trial.scoringdataentry.models {
 //				scorings.itemUpdated(scoring1);
 //				scorings.itemUpdated(scoring2);
 			}
+			sendScoringsChangedEvent();
+		}
+
+
+		private function sendScoringsChangedEvent():void {
 			scorings.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.UPDATE));
 		}
 	}

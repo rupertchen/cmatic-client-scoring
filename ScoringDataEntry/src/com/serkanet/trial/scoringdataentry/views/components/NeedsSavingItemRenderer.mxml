@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
+			[Bindable]
+			private var theColor:uint = 0xFF00FF;
+
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				// TODO: figure out how to use "listdata" to discover what field should be rendered instead of
+				// hardcoding needsSaving
+				var vo:ScoringVo = data as ScoringVo;
+				theColor = vo.needsSaving ? 0xFF0000 : 0x0000FF;
+			}
+
+		]]>
+	</mx:Script>
+
+	<mx:Canvas backgroundColor="{theColor}"
+		width="100%" height="100%"/>
+</mx:Canvas>
