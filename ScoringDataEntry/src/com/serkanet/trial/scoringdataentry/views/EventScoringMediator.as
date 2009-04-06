@@ -1,6 +1,5 @@
 package com.serkanet.trial.scoringdataentry.views {
 	import com.serkanet.trial.scoringdataentry.models.EventScoringProxy;
-	import com.serkanet.trial.scoringdataentry.models.vos.ScoringVo;
 	import com.serkanet.trial.scoringdataentry.views.components.EventScoringPanel;
 
 	import flash.events.Event;
@@ -33,20 +32,41 @@ package com.serkanet.trial.scoringdataentry.views {
 
 			eventScoringPanel.addEventListener(EventScoringPanel.SAVE_SCORINGS, onSaveScorings);
 			eventScoringPanel.addEventListener(EventScoringPanel.RANDOMIZE_COMPETITORS, onRandomizeCompetitors);
+			eventScoringPanel.addEventListener(EventScoringPanel.COMPUTE_PLACEMENTS, onComputePlacements);
 		}
 
 
 		private function onSaveScorings(event:Event):void {
 			eventScoringProxy.saveScorings();
-
-			// todo testing
-			eventScoringPanel.scorings = eventScoringProxy.scorings;
+			// TODO: This should wait for the async's real success message
+			setStatus("Saved changes");
 		}
 
 
 		private function onRandomizeCompetitors(event:Event):void {
+			if (!eventScoringProxy.areScoringsSaved()) {
+				setStatus("Save changes before randomizing");
+				return;
+			}
+			setStatus("Randomizing competitors");
 			eventScoringProxy.randomizeCompetitors();
+			eventScoringProxy.saveScorings();
 		}
 
+
+		private function onComputePlacements(event:Event):void {
+			if (!eventScoringProxy.areScoringsSaved()) {
+				setStatus("Save changes before computing placement");
+				return;
+			}
+			setStatus("Computing placements");
+			eventScoringProxy.computePlacements();
+			eventScoringProxy.saveScorings();
+		}
+
+
+		private function setStatus(status:String):void {
+			eventScoringPanel.status = status;
+		}
 	}
 }

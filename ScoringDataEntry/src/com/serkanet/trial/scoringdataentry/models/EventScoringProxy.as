@@ -17,15 +17,17 @@ package com.serkanet.trial.scoringdataentry.models {
 
 		public function EventScoringProxy() {
 			super(NAME, new ArrayCollection());
+			sortScoringsByOrder();
+			scorings.addEventListener(CollectionEvent.COLLECTION_CHANGE, onScoringsCollectionChange);
+			initFakeData();
+		}
 
+
+		private function sortScoringsByOrder():void {
 			var sort:Sort = new Sort();
 			sort.fields = [new SortField("order"), new SortField("id")];
 			scorings.sort = sort;
-
-
-			scorings.addEventListener(CollectionEvent.COLLECTION_CHANGE, onScoringsCollectionChange);
-
-			initFakeData();
+			scorings.refresh()
 		}
 
 
@@ -82,7 +84,7 @@ package com.serkanet.trial.scoringdataentry.models {
 
 
 		public function randomizeCompetitors():void {
-			// I don't think this shuffling is uniformly random, but it's good enough for now
+			// This shuffling is not uniformly random, but it's good enough for now
 			var max_index:Number = scorings.length - 1 ;
 			for (var transpose_index:Number = 0; transpose_index < scorings.length; transpose_index++) {
 				var random:Number = Math.round(Math.random() * max_index);
@@ -92,15 +94,78 @@ package com.serkanet.trial.scoringdataentry.models {
 				var oldOrder2:Number = scoring2.order;
 				scoring1.order = oldOrder2;
 				scoring2.order = oldOrder1;
-
-				// TODO: Figure out why calling itemUpdate() like this does not cause the panel to update its view
-				// Tutorials claim you should use this, but it does not cause the COLLECTION_CHANGE event to fire which
-				// appears to be what the DataGrid is listening for. As a work around fire off the COLLECTION_CHANGE
-				// explicitly
-//				scorings.itemUpdated(scoring1);
-//				scorings.itemUpdated(scoring2);
 			}
-			sendScoringsChangedEvent();
+			sortScoringsByOrder()
+		}
+
+
+		public function computePlacements():void {
+			computeScores();
+			sortScoringsByPlacements();
+			assignPlacements();
+		}
+
+
+		private function computeScores():void {
+			for each (var scoring:ScoringVo in scorings) {
+				getScoringProxy(scoring.id).computeScore();
+			}
+		}
+
+
+		private function sortScoringsByPlacements():void {
+			var sort:Sort = new Sort();
+			sort.fields = [
+				new SortField("finalScore", true, true),
+				new SortField("tieBreaker1", true, true),
+				new SortField("tieBreaker2", true, true),
+				new SortField("tieBreaker3", true, true)
+			];
+
+			scorings.sort = sort;
+			scorings.refresh();
+		}
+
+
+		private function assignPlacements():void {
+			var previousScoring:ScoringVo = null;
+			var numPeoplePlaced:Number = 0;
+
+			for each (var scoring:ScoringVo in scorings) {
+				if (isTie(scoring, previousScoring)) {
+					scoring.placement = previousScoring.placement;
+				} else {
+					scoring.placement = numPeoplePlaced + 1;
+				}
+
+				previousScoring = scoring;
+				numPeoplePlaced++;
+			}
+		}
+
+
+		private function isTie(scoring1:ScoringVo, scoring2:ScoringVo):Boolean {
+			if (scoring1 == scoring2) {
+				return true;
+			}
+			if (!scoring1 || !scoring2) {
+				return false;
+			}
+
+			return scoring1.finalScore == scoring2.finalScore
+				&& scoring1.tieBreaker1 == scoring2.tieBreaker1
+				&& scoring1.tieBreaker2 == scoring2.tieBreaker2
+				&& scoring1.tieBreaker3 == scoring2.tieBreaker3;
+		}
+
+
+		public function areScoringsSaved():Boolean {
+			for each (var scoring:ScoringVo in scorings) {
+				if (scoring.needsSaving) {
+					return false;
+				}
+			}
+			return true;
 		}
 
 

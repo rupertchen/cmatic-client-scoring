@@ -14,6 +14,7 @@
 
 			public static const SAVE_SCORINGS:String = "saveScorings";
 			public static const RANDOMIZE_COMPETITORS:String = "randomizeCompetitors";
+			public static const COMPUTE_PLACEMENTS:String = "computePlacements";
 
 			[Bindable]
 			public var scorings:ArrayCollection;
@@ -37,6 +38,13 @@
 					+ ")";
 			}
 
+
+			private function placementLabelFunction(item:ScoringVo, column:DataGridColumn):String {
+				if (0 == item.placement) {
+					return '--';
+				}
+				return item.placement.toString();
+			}
 
 			private function formatTime(seconds:Number):String {
 				if (isNaN(seconds)) {
@@ -69,7 +77,8 @@
 				headerRenderer="mx.controls.Label"
 				headerText="#"
 				width="40"
-				editable="true"/>
+				editable="true"
+				resizable="false"/>
 			<mx:DataGridColumn
 				dataField="name"
 				headerRenderer="mx.controls.Label"
@@ -149,15 +158,24 @@
 				showDataTips="true" dataTipFunction="finalScoreDataTipFunction"
 				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.PointsItemRenderer"/>
 			<mx:DataGridColumn
+				dataField="placement"
+				headerRenderer="mx.controls.Label"
+				headerText="Placement"
+				width="40"
+				editable="false"
+				labelFunction="placementLabelFunction"/>
+			<mx:DataGridColumn
 				dataField="needsSaving"
 				width="10"
 				editable="false"
+				resizable="false"
 				itemRenderer="com.serkanet.trial.scoringdataentry.views.components.NeedsSavingItemRenderer"/>
 		</mx:columns>
 	</mx:DataGrid>
 
 	<mx:ControlBar horizontalAlign="right">
-		<mx:Button label="Randomize Competitor Order" click="sendEvent(RANDOMIZE_COMPETITORS)"/>
-		<mx:Button label="Save Scores" click="sendEvent(SAVE_SCORINGS)"/>
+		<mx:Button label="Randomize Competitors" click="sendEvent(RANDOMIZE_COMPETITORS)"/>
+		<mx:Button label="Save Changes" click="sendEvent(SAVE_SCORINGS)"/>
+		<mx:Button label="Compute Placements" click="sendEvent(COMPUTE_PLACEMENTS)"/>
 	</mx:ControlBar>
 </mx:Panel>

@@ -18,8 +18,12 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 		public var tieBreaker1:Number;
 		public var tieBreaker2:Number;
 		public var tieBreaker3:Number;
+		public var placement:Number;
 		public var needsSaving:Boolean;
 
+
+		// TODO: For the "real" thing there's no point in doing this. Might as well just assign directly to the
+		// members.
 		public function ScoringVo(
 			id:String,
 			order:Number,
@@ -53,6 +57,7 @@ package com.serkanet.trial.scoringdataentry.models.vos {
 			this.tieBreaker2 = tieBreaker2;
 			this.tieBreaker3 = tieBreaker3;
 			this.needsSaving = false;
+			this.placement = 0;
 		}
 	}
 }
