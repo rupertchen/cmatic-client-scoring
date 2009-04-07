@@ -2,6 +2,7 @@ package com.serkanet.trial.scoringdataentry.controllers {
 	import com.serkanet.trial.scoringdataentry.models.AgeGroupsProxy;
 	import com.serkanet.trial.scoringdataentry.models.AppConfigProxy;
 	import com.serkanet.trial.scoringdataentry.models.DivisionsProxy;
+	import com.serkanet.trial.scoringdataentry.models.EventsProxy;
 	import com.serkanet.trial.scoringdataentry.models.FormsProxy;
 	import com.serkanet.trial.scoringdataentry.models.SexesProxy;
 
@@ -30,6 +31,10 @@ package com.serkanet.trial.scoringdataentry.controllers {
 			var ageGroupsProxy:AgeGroupsProxy = new AgeGroupsProxy();
 			facade.registerProxy(ageGroupsProxy);
 			ageGroupsProxy.load();
+
+			var eventsProxy:EventsProxy = new EventsProxy();
+			facade.registerProxy(eventsProxy);
+			eventsProxy.load("ringId", "1");
 		}
 
 	}

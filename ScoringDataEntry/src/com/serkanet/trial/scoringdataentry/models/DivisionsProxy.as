@@ -8,6 +8,7 @@ package com.serkanet.trial.scoringdataentry.models {
 
 		private static const TYPE:String = "division";
 
+
 		public function DivisionsProxy() {
 			super(NAME, TYPE, LOAD_SUCCESS, LOAD_FAILURE);
 		}
