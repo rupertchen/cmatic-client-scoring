@@ -1,8 +1,8 @@
 package com.serkanet.trial.scoringdataentry.controllers {
 
 	import com.serkanet.trial.scoringdataentry.models.AppConfigProxy;
-	import com.serkanet.trial.scoringdataentry.models.EventScoringProxy;
-	import com.serkanet.trial.scoringdataentry.views.EventScoringMediator;
+	import com.serkanet.trial.scoringdataentry.models.EventScoringsProxy;
+	import com.serkanet.trial.scoringdataentry.views.EventScoringsMediator;
 
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
@@ -15,10 +15,10 @@ package com.serkanet.trial.scoringdataentry.controllers {
 			facade.registerProxy(configProxy);
 			configProxy.retrieveConfig();
 
-			facade.registerProxy(new EventScoringProxy());
+			facade.registerProxy(new EventScoringsProxy());
 
 			var app:ScoringDataEntryApp = notification.getBody() as ScoringDataEntryApp;
-			facade.registerMediator(new EventScoringMediator(app.eventScoring));
+			facade.registerMediator(new EventScoringsMediator(app.eventScorings));
 		}
 
 	}

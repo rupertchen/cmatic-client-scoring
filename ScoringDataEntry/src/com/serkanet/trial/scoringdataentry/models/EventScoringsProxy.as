@@ -11,11 +11,11 @@ package com.serkanet.trial.scoringdataentry.models {
 	import org.puremvc.as3.patterns.proxy.Proxy;
 
 
-	public class EventScoringProxy extends Proxy {
+	public class EventScoringsProxy extends Proxy {
 
-		public static const NAME:String = "EventScoring";
+		public static const NAME:String = "EventScorings";
 
-		public function EventScoringProxy() {
+		public function EventScoringsProxy() {
 			super(NAME, new ArrayCollection());
 			sortScoringsByOrder();
 			scorings.addEventListener(CollectionEvent.COLLECTION_CHANGE, onScoringsCollectionChange);

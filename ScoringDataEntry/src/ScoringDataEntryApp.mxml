@@ -13,7 +13,7 @@
 
 	<mx:Panel width="600" height="400" layout="absolute" title="Scoring" status="...">
 		<mx:TabNavigator width="100%" height="100%">
-			<views:EventScoringPanel id="eventScoring"
+			<views:EventScoringsPanel id="eventScorings"
 				label="Event Scoring component"
 				width="100%" height="100%"/>
 			<mx:Panel label="Other Tab" width="100%" height="100%">
