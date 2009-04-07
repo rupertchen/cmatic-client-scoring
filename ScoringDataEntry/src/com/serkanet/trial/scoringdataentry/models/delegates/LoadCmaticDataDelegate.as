@@ -2,13 +2,13 @@ package com.serkanet.trial.scoringdataentry.models.delegates {
 	import mx.rpc.IResponder;
 	import mx.rpc.http.HTTPService;
 
-	public class LoadEventParameterDelegate {
+	public class LoadCmaticDataDelegate {
 
 		private var service:HTTPService;
 		private var parameters:Object;
 
 
-		public function LoadEventParameterDelegate(url:String, type:String, filterField:String = null, filterValue:String = null) {
+		public function LoadCmaticDataDelegate(url:String, type:String, filterField:String = null, filterValue:String = null) {
 			service = new HTTPService();
 			service.url = url;
 			service.resultFormat = "text";

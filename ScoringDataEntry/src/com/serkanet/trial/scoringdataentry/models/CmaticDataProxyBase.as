@@ -1,6 +1,6 @@
 package com.serkanet.trial.scoringdataentry.models {
 	import com.adobe.serialization.json.JSON;
-	import com.serkanet.trial.scoringdataentry.models.delegates.LoadEventParameterDelegate;
+	import com.serkanet.trial.scoringdataentry.models.delegates.LoadCmaticDataDelegate;
 
 	import mx.collections.ArrayCollection;
 	import mx.rpc.Fault;
@@ -31,7 +31,7 @@ package com.serkanet.trial.scoringdataentry.models {
 
 		public function load(filterField:String = null, filterValue:String = null):void {
 			var configProxy:AppConfigProxy = facade.retrieveProxy(ConfigProxy.NAME) as AppConfigProxy;
-			var delegate:LoadEventParameterDelegate = new LoadEventParameterDelegate(configProxy.appConfig.getService, type, filterField, filterValue);
+			var delegate:LoadCmaticDataDelegate = new LoadCmaticDataDelegate(configProxy.appConfig.getService, type, filterField, filterValue);
 			delegate.retrieve(this);
 		}
 
