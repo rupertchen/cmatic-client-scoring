@@ -1,9 +1,11 @@
 package com.serkanet.trial.scoringdataentry.controllers {
 	import com.serkanet.trial.scoringdataentry.models.AgeGroupsProxy;
 	import com.serkanet.trial.scoringdataentry.models.AppConfigProxy;
+	import com.serkanet.trial.scoringdataentry.models.CompetitorsProxy;
 	import com.serkanet.trial.scoringdataentry.models.DivisionsProxy;
 	import com.serkanet.trial.scoringdataentry.models.EventsProxy;
 	import com.serkanet.trial.scoringdataentry.models.FormsProxy;
+	import com.serkanet.trial.scoringdataentry.models.GroupsProxy;
 	import com.serkanet.trial.scoringdataentry.models.SexesProxy;
 
 	import org.puremvc.as3.interfaces.INotification;
@@ -31,6 +33,14 @@ package com.serkanet.trial.scoringdataentry.controllers {
 			var ageGroupsProxy:AgeGroupsProxy = new AgeGroupsProxy();
 			facade.registerProxy(ageGroupsProxy);
 			ageGroupsProxy.load();
+
+			var competitorsProxy:CompetitorsProxy = new CompetitorsProxy();
+			facade.registerProxy(competitorsProxy);
+			competitorsProxy.load();
+
+			var groupsProxy:GroupsProxy = new GroupsProxy();
+			facade.registerProxy(groupsProxy);
+			groupsProxy.load();
 
 			var eventsProxy:EventsProxy = new EventsProxy();
 			facade.registerProxy(eventsProxy);
