@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionScriptProperties mainApplicationPath="CmaticScoring.mxml" version="3">
+<compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.124" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
+<compilerSourcePath/>
+<libraryPath defaultLinkType="1">
+<libraryPathEntry kind="4" path=""/>
+<libraryPathEntry kind="1" linkType="1" path="libs"/>
+</libraryPath>
+<sourceAttachmentPath>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="/Users/serka/Documents/flex_test/CmaticScoring/libs/as3corelib.swc" sourcepath="/Users/serka/puremvc/as3corelib-.92.1/src" useDefaultLinkType="false"/>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="/Users/serka/Documents/flex_test/CmaticScoring/libs/PureMVC_AS3_2_0_4.swc" sourcepath="/Users/serka/puremvc/PureMVC_AS3_2_0_4/src" useDefaultLinkType="false"/>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="/Users/serka/Documents/flex_test/CmaticScoring/libs/Utility_AS3_Flex_DeploymentConfig_1_0.swc" sourcepath="/Users/serka/puremvc/DeploymentConfig_1_0/src-standard" useDefaultLinkType="false"/>
+</sourceAttachmentPath>
+</compiler>
+<applications>
+<application path="CmaticScoring.mxml"/>
+</applications>
+<modules/>
+<buildCSSFiles/>
+</actionScriptProperties>
