@@ -8,18 +8,20 @@ package com.serkanet.trial.scoringdataentry.models {
 	import mx.events.CollectionEventKind;
 	import mx.events.PropertyChangeEvent;
 
-	import org.puremvc.as3.patterns.proxy.Proxy;
 
-
-	public class EventScoringsProxy extends Proxy {
+	public class EventScoringsProxy extends CmaticDataProxyBase {
 
 		public static const NAME:String = "EventScorings";
+		public static const LOAD_SUCCESS:String = NAME + "/load/success";
+		public static const LOAD_FAILURE:String = NAME + "/load/failure";
+
+		private static const TYPE:String = "scoring";
+
 
 		public function EventScoringsProxy() {
-			super(NAME, new ArrayCollection());
+			super(NAME, TYPE, LOAD_SUCCESS, LOAD_FAILURE);
 			sortScoringsByOrder();
 			scorings.addEventListener(CollectionEvent.COLLECTION_CHANGE, onScoringsCollectionChange);
-			initFakeData();
 		}
 
 
@@ -31,20 +33,40 @@ package com.serkanet.trial.scoringdataentry.models {
 		}
 
 
+		override protected function constructVo(record:Object):Object {
+			var vo:ScoringVo = new ScoringVo();
+			vo.id = record.id;
+			vo.order = record.order;
+			vo.name = record.competitorId;
+			vo.score1 = record.score0;
+			vo.score2 = record.score1;
+			vo.score3 = record.score2;
+			vo.score4 = record.score3;
+			vo.score5 = record.score4;
+			vo.time = record.time;
+			vo.timeDeduction = record.timeDeduction;
+			vo.otherDeduction = record.otherDeduction;
+			vo.finalScore = record.finalScore;
+			vo.tieBreaker1 = record.tieBreaker0;
+			vo.tieBreaker2 = record.tieBreaker1;
+			vo.tieBreaker3 = record.tieBreaker2;
+			vo.placement = record.placement;
+			return vo;
+		}
+
+
 		public function get scorings():ArrayCollection {
 			return data as ArrayCollection;
 		}
 
 
 		private function onScoringsCollectionChange(event:CollectionEvent):void {
-			// TODO: This is the wrong place to do these updates because it'll cause a loop
-			// Get around the problem for now by filtering by property.
 			switch (event.kind) {
 				case CollectionEventKind.UPDATE:
 					for each (var propertyChangeEvent:PropertyChangeEvent in event.items) {
 						if (propertyChangeEvent.newValue != propertyChangeEvent.oldValue) {
 							var scoring:ScoringVo = propertyChangeEvent.source as ScoringVo;
-							getScoringProxy(scoring.id).onChange(propertyChangeEvent);
+							getScoringProxy(scoring).onChange(propertyChangeEvent);
 						}
 					}
 					break;
@@ -52,22 +74,13 @@ package com.serkanet.trial.scoringdataentry.models {
 		}
 
 
-		private function getScoringProxy(id:String):ScoringProxy {
-			return facade.retrieveProxy(ScoringProxy.getName(id)) as ScoringProxy;
-		}
-
-
-		private function initFakeData():void {
-			addScoring(new ScoringVo("123", 1, "John", 5, 5.5, 3, 4, 5, 50, 0, 0));
-			addScoring(new ScoringVo("56", 2, "Jane", 5.5, 5.5, 5, 4, 3, 23, 0, 0));
-			addScoring(new ScoringVo("928", 3, "Mark", 6, 5.5, 6, 2, 3, 65, 0, 0));
-			addScoring(new ScoringVo("235", 4, "Michelle", 5, 7, 6, 3, 5, 60, 0, 0));
-		}
-
-
-		private function addScoring(vo:ScoringVo):void {
-			scorings.addItem(vo);
-			facade.registerProxy(new ScoringProxy(vo));
+		private function getScoringProxy(scoring:ScoringVo):ScoringProxy {
+			var proxy:ScoringProxy = facade.retrieveProxy(ScoringProxy.getName(scoring.id)) as ScoringProxy;
+			if (!proxy) {
+				proxy = new ScoringProxy(scoring);
+				facade.registerProxy(proxy);
+			}
+			return proxy;
 		}
 
 
@@ -79,7 +92,7 @@ package com.serkanet.trial.scoringdataentry.models {
 
 
 		public function saveScoring(scoring:ScoringVo):void {
-			getScoringProxy(scoring.id).save();
+			getScoringProxy(scoring).save();
 		}
 
 
@@ -108,7 +121,7 @@ package com.serkanet.trial.scoringdataentry.models {
 
 		private function computeScores():void {
 			for each (var scoring:ScoringVo in scorings) {
-				getScoringProxy(scoring.id).computeScore();
+				getScoringProxy(scoring).computeScore();
 			}
 		}
 

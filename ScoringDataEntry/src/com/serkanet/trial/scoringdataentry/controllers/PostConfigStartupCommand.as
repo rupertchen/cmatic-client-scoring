@@ -3,6 +3,7 @@ package com.serkanet.trial.scoringdataentry.controllers {
 	import com.serkanet.trial.scoringdataentry.models.AppConfigProxy;
 	import com.serkanet.trial.scoringdataentry.models.CompetitorsProxy;
 	import com.serkanet.trial.scoringdataentry.models.DivisionsProxy;
+	import com.serkanet.trial.scoringdataentry.models.EventScoringsProxy;
 	import com.serkanet.trial.scoringdataentry.models.EventsProxy;
 	import com.serkanet.trial.scoringdataentry.models.FormsProxy;
 	import com.serkanet.trial.scoringdataentry.models.GroupsProxy;
@@ -45,6 +46,9 @@ package com.serkanet.trial.scoringdataentry.controllers {
 			var eventsProxy:EventsProxy = new EventsProxy();
 			facade.registerProxy(eventsProxy);
 			eventsProxy.load("ringId", "1");
+
+			var eventScoringsProxy:EventScoringsProxy = facade.retrieveProxy(EventScoringsProxy.NAME) as EventScoringsProxy;
+			eventScoringsProxy.load("eventId", "23");
 		}
 
 	}
