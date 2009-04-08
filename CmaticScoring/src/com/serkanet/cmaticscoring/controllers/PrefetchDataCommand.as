@@ -1,6 +1,8 @@
 package com.serkanet.cmaticscoring.controllers {
+	import com.serkanet.cmaticscoring.ApplicationFacade;
 	import com.serkanet.cmaticscoring.models.AgeGroupsProxy;
 	import com.serkanet.cmaticscoring.models.DivisionsProxy;
+	import com.serkanet.cmaticscoring.models.EventsProxy;
 	import com.serkanet.cmaticscoring.models.FormsProxy;
 	import com.serkanet.cmaticscoring.models.SexesProxy;
 
@@ -22,6 +24,9 @@ package com.serkanet.cmaticscoring.controllers {
 			var forms:FormsProxy = facade.retrieveProxy(FormsProxy.NAME) as FormsProxy;
 			forms.load();
 
+			var events:EventsProxy = facade.retrieveProxy(EventsProxy.NAME) as EventsProxy;
+			var i:* = ApplicationFacade.getConfigProxy();
+			events.load("ringId", ApplicationFacade.getConfigProxy().appConfig.ringNumber.toString());
 		}
 
 	}
