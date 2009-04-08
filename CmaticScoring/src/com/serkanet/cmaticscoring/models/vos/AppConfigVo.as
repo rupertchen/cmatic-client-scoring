@@ -14,7 +14,7 @@ package com.serkanet.cmaticscoring.models.vos {
 
 
 		public function get getService():String {
-			return config.nsDeploy::GetService;
+			return config.nsDeploy::getService;
 		}
 
 	}

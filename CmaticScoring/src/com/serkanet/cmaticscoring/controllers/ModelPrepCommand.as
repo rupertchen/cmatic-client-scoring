@@ -1,5 +1,9 @@
 package com.serkanet.cmaticscoring.controllers {
+	import com.serkanet.cmaticscoring.models.AgeGroupsProxy;
 	import com.serkanet.cmaticscoring.models.AppConfigProxy;
+	import com.serkanet.cmaticscoring.models.DivisionsProxy;
+	import com.serkanet.cmaticscoring.models.FormsProxy;
+	import com.serkanet.cmaticscoring.models.SexesProxy;
 
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
@@ -8,6 +12,11 @@ package com.serkanet.cmaticscoring.controllers {
 
 		override public function execute(notification:INotification):void {
 			facade.registerProxy(new AppConfigProxy());
+
+			facade.registerProxy(new DivisionsProxy());
+			facade.registerProxy(new SexesProxy());
+			facade.registerProxy(new AgeGroupsProxy());
+			facade.registerProxy(new FormsProxy());
 		}
 
 	}

@@ -7,6 +7,7 @@ package com.serkanet.cmaticscoring.controllers {
 	public class LoadConfigCommand extends SimpleCommand {
 
 		override public function execute(notification:INotification):void {
+			trace("retriev config");
 			ApplicationFacade.getConfigProxy().retrieveConfig();
 		}
 

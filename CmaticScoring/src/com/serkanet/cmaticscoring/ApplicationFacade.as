@@ -1,5 +1,6 @@
 package com.serkanet.cmaticscoring {
 	import com.serkanet.cmaticscoring.controllers.LoadConfigCommand;
+	import com.serkanet.cmaticscoring.controllers.PrefetchDataCommand;
 	import com.serkanet.cmaticscoring.controllers.StartupCommand;
 	import com.serkanet.cmaticscoring.models.AppConfigProxy;
 
@@ -15,6 +16,8 @@ package com.serkanet.cmaticscoring {
 
 		// command
 		public static const LOAD_CONFIG:String = "loadConfig";
+		public static const PREFETCH_DATA:String = "prefetchData";
+
 
 		// view
 		public static const VIEW_ID_SCREEN:String = "viewIdScreen";
@@ -33,6 +36,7 @@ package com.serkanet.cmaticscoring {
 			super.initializeController();
 			registerCommand(STARTUP, StartupCommand);
 			registerCommand(LOAD_CONFIG, LoadConfigCommand);
+			registerCommand(PREFETCH_DATA, PrefetchDataCommand);
 		}
 
 
