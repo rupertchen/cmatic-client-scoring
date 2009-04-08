@@ -1,0 +1,13 @@
+App Startup
+	Load all "static" data at start up
+
+IdScreen
+	Click "Start" without picking a ring.
+		Show status message.
+	Pick a ring. Click "Start".
+		Move to MainScreen
+		MainScreen shows ring number at top.
+
+Main Screen
+	Resize browser
+		Main screen matches size, but retains slight padding from the edge.

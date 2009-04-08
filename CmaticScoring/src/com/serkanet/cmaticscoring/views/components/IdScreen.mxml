@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ListEvent;
+			import mx.collections.ArrayCollection;
+
+			public static const START_SCORING:String = "startScoring";
+
+
+			[Bindable]
+			public var selectedRing:Number;
+
+			[Bindable]
+			public var statusMessage:String;
+
+			[Bindable]
+			private var rings:ArrayCollection = new ArrayCollection([
+				{label: "--", data: NaN},
+				{label: "Ring 1", data: 1},
+				{label: "Ring 2", data: 2},
+				{label: "Ring 3", data: 3},
+				{label: "Ring 4", data: 4},
+				{label: "Ring 5", data: 5},
+				{label: "Ring 6", data: 6},
+				{label: "Ring 7", data: 7},
+				{label: "Ring 8", data: 8}
+			]);
+
+
+			private function sendEvent(eventName:String):void {
+				dispatchEvent(new Event(eventName, true));
+			}
+
+
+			private function onSelectRing():void {
+				selectedRing = ringPicker.selectedItem.data;
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Panel title="Welcome"
+		layout="absolute"
+		horizontalCenter="0" verticalCenter="-50"
+		status="{statusMessage}">
+
+		<mx:Form>
+			<mx:FormItem label="Select a ring:">
+				<mx:ComboBox id="ringPicker" selectedIndex="0" width="150" dataProvider="{rings}" change="onSelectRing()"/>
+			</mx:FormItem>
+		</mx:Form>
+		<mx:ControlBar horizontalAlign="right">
+			<mx:Button label="Start" click="sendEvent(START_SCORING)"/>
+		</mx:ControlBar>
+	</mx:Panel>
+</mx:Canvas>

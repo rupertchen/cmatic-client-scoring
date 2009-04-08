@@ -13,11 +13,18 @@
 	</mx:Script>
 
 	<mx:Canvas top="0" right="0" bottom="0" left="0">
-		<mx:ViewStack id="viewStack" top="0" right="0" bottom="0" left="0"
+		<mx:ViewStack id="viewStack" top="10" right="10" bottom="10" left="10"
 			resizeToContent="false">
 			<mx:VBox/>
-			<mx:VBox/>
-			<views:MainScreen top="10" right="10" bottom="10" left="10"/>
+			<views:IdScreen id="idScreen"/>
+			<views:MainScreen id="mainScreen"/>
+			<mx:VBox>
+				<mx:Canvas width="100%" height="100%">
+					<mx:TitleWindow layout="absolute" horizontalCenter="-14" verticalCenter="-50" title="Error">
+						<mx:Text text="Could not load config.&#xd;"/>
+					</mx:TitleWindow>
+				</mx:Canvas>
+			</mx:VBox>
 		</mx:ViewStack>
 	</mx:Canvas>
 </mx:Application>

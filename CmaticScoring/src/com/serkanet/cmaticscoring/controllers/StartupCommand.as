@@ -4,6 +4,7 @@ package com.serkanet.cmaticscoring.controllers {
 	public class StartupCommand extends MacroCommand {
 
 		override protected function initializeMacroCommand():void {
+			addSubCommand(ModelPrepCommand);
 			addSubCommand(ViewPrepCommand);
 		}
 
