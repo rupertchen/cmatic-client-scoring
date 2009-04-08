@@ -1,11 +1,10 @@
 package com.serkanet.cmaticscoring.controllers {
-	import org.puremvc.as3.interfaces.INotification;
-	import org.puremvc.as3.patterns.command.SimpleCommand;
+	import org.puremvc.as3.patterns.command.MacroCommand;
 
-	public class StartupCommand extends SimpleCommand {
+	public class StartupCommand extends MacroCommand {
 
-		override public function execute(notification:INotification):void {
-			trace("Running startup command");
+		override protected function initializeMacroCommand():void {
+			addSubCommand(ViewPrepCommand);
 		}
 
 	}

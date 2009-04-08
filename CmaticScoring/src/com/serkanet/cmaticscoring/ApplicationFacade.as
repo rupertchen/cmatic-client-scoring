@@ -7,6 +7,16 @@ package com.serkanet.cmaticscoring {
 
 		public static const STARTUP:String = "startup";
 
+		// proxy
+		// TODO placeholder
+
+		// command
+		// TODO placeholder
+
+		// view
+		public static const VIEW_ID_SCREEN:String = "viewIdScreen";
+		public static const VIEW_MAIN_SCREEN:String = "viewMainScreen";
+
 
 		public static function getInstance():ApplicationFacade {
 			if (instance == null) {

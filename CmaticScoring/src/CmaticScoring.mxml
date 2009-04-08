@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+<mx:Application
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+ 	xmlns:views="com.serkanet.cmaticscoring.views.components.*"
 	layout="absolute"
 	creationComplete="facade.startup(this)">
 
@@ -10,19 +12,12 @@
 		]]>
 	</mx:Script>
 
-	<mx:Canvas
-		width="95%" height="95%" horizontalCenter="0" verticalCenter="0">
-		<mx:VBox width="100%" height="100%">
-			<mx:Label text="Ring Number Goes Here" fontSize="24" fontWeight="bold" width="100%" height="35"/>
-			<mx:HDividedBox width="100%" height="100%">
-				<mx:Panel x="10" width="150" height="100%" layout="absolute" title="Event Schedule">
-				</mx:Panel>
-				<mx:TabNavigator height="100%" width="100%">
-					<mx:Panel label="Welcome" width="100%" height="100">
-					</mx:Panel>
-				</mx:TabNavigator>
-			</mx:HDividedBox>
-		</mx:VBox>
+	<mx:Canvas top="0" right="0" bottom="0" left="0">
+		<mx:ViewStack id="viewStack" top="0" right="0" bottom="0" left="0"
+			resizeToContent="false">
+			<mx:VBox/>
+			<mx:VBox/>
+			<views:MainScreen top="10" right="10" bottom="10" left="10"/>
+		</mx:ViewStack>
 	</mx:Canvas>
-
 </mx:Application>
