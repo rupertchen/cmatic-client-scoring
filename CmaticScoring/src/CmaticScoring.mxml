@@ -10,7 +10,15 @@
 			import mx.effects.easing.Exponential;
 			import com.serkanet.cmaticscoring.ApplicationFacade;
 
+			public static const ID_SCREEN_CREATED:String = "idScreenCreated";
+			public static const LOADING_SCREEN_CREATED:String = "loadingScreenCreated";
+			public static const MAIN_SCREEN_CREATED:String = "mainScreenCreated";
+
 			private var facade:ApplicationFacade = ApplicationFacade.getInstance();
+
+			private function sendEvent(eventName:String):void {
+				dispatchEvent(new Event(eventName, true));
+			}
 		]]>
 	</mx:Script>
 
@@ -22,9 +30,10 @@
 		<mx:ViewStack id="viewStack" top="10" right="10" bottom="10" left="10"
 			resizeToContent="false">
 			<mx:VBox/>
-			<views:IdScreen id="idScreen" showEffect="slideIn" hideEffect="fadeOut"/>
-			<mx:VBox/> <!-- replace this with the progress bar -->
-			<views:MainScreen id="mainScreen" showEffect="fadeIn"/>
+			<views:IdScreen id="idScreen" showEffect="slideIn" hideEffect="fadeOut" creationComplete="sendEvent(ID_SCREEN_CREATED)"/>
+			<!-- replace this with the progress bar -->
+			<mx:VBox id="loadingScreen" showEffect="fadeIn" hideEffect="fadeOut" creationComplete="sendEvent(LOADING_SCREEN_CREATED)"/>
+			<views:MainScreen id="mainScreen" showEffect="fadeIn" creationComplete="sendEvent(MAIN_SCREEN_CREATED)"/>
 			<mx:VBox showEffect="fadeIn">
 				<mx:Canvas width="100%" height="100%">
 					<mx:TitleWindow layout="absolute" horizontalCenter="-14" verticalCenter="-50" title="Error">

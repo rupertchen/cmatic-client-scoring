@@ -1,5 +1,7 @@
 package com.serkanet.cmaticscoring.models {
 	import com.serkanet.cmaticscoring.models.vos.EventParameterVo;
+	
+	import mx.collections.ArrayCollection;
 
 
 	public class EventParameterProxyBase extends CmaticDataProxyBase {

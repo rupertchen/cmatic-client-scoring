@@ -71,5 +71,17 @@ package com.serkanet.cmaticscoring.models {
 			sendNotification(failureNotificationName);
 		}
 
+
+		public function getFieldFromid(id:String, field:String):String {
+			var vos:ArrayCollection = data as ArrayCollection;
+
+			for each (var vo:* in vos) {
+				if (vo.id == id) {
+					return vo[field];
+				}
+			}
+
+			return null;
+		}
 	}
 }

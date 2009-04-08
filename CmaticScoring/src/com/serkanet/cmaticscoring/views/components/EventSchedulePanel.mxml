@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+	layout="absolute"
+	title="Event Schedule">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			public static const REFRESH_SCHEDULE:String = "refreshSchedule";
+			public static const TOGGLE_SHOW_FINISHED:String = "toggleShowFinished";
+
+			[Bindable]
+			public var events:ArrayCollection;
+
+			private function sendEvent(eventName:String):void {
+				dispatchEvent(new Event(eventName, true));
+			}
+		]]>
+	</mx:Script>
+
+	<mx:DataGrid id="eventsDataGrid"
+		draggableColumns="false"
+		width="100%" height="100%"
+		dataProvider="{events}">
+		<mx:columns>
+			<mx:DataGridColumn
+				dataField="order"
+				headerText="Order"
+				width="55"/>
+			<mx:DataGridColumn
+				dataField="code"
+				headerText="Code"
+				width="50"/>
+			<mx:DataGridColumn
+				dataField="numCompetitors"
+				headerText="#"
+				width="30"/>
+			<mx:DataGridColumn
+				dataField="name"
+				headerText="Name"/>
+		</mx:columns>
+	</mx:DataGrid>
+
+	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="Show Finished" toggle="true" click="sendEvent(TOGGLE_SHOW_FINISHED)"/>
+		<mx:Button label="Refresh" click="sendEvent(REFRESH_SCHEDULE)"/>
+	</mx:ControlBar>
+</mx:Panel>

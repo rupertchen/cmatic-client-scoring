@@ -12,20 +12,9 @@ package com.serkanet.cmaticscoring.views {
 
 		public function MainScreenMediator(viewComponent:MainScreen) {
 			super(NAME, viewComponent);
-		}
 
-
-		override public function listNotificationInterests():Array {
-			return [ApplicationFacade.VIEW_MAIN_SCREEN];
-		}
-
-
-		override public function handleNotification(notification:INotification):void {
-			switch (notification.getName()) {
-				case ApplicationFacade.VIEW_MAIN_SCREEN:
-					mainScreen.title = "Currently Scoring for Ring " + ApplicationFacade.getConfigProxy().appConfig.ringNumber;
-					break;
-			}
+			mainScreen.title = "Currently Scoring for Ring " + ApplicationFacade.getConfigProxy().appConfig.ringNumber;
+			facade.registerMediator(new EventScheduleMediator(mainScreen.eventSchedule));
 		}
 
 

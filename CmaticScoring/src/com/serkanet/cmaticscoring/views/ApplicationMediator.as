@@ -6,6 +6,8 @@ package com.serkanet.cmaticscoring.views {
 	import com.serkanet.cmaticscoring.models.FormsProxy;
 	import com.serkanet.cmaticscoring.models.SexesProxy;
 
+	import flash.events.Event;
+
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	import org.puremvc.as3.utilities.flex.config.model.ConfigProxy;
@@ -15,6 +17,7 @@ package com.serkanet.cmaticscoring.views {
 
 		public static const NAME:String = "ApplicationMediator";
 
+		// TODO: move this set of constants to the component
 		public static const ID_SCREEN:Number = 1;
 		public static const LOADING_SCREEN:Number = 2;
 		public static const MAIN_SCREEN:Number = 3;
@@ -23,15 +26,35 @@ package com.serkanet.cmaticscoring.views {
 		// TODO: This must be manually kept in sync with the number of prefetches in PrefetchDataCommand.
 		// Factor this out into a separate prefetch proxy so the command can set the number at the same
 		// place it does the loads.
-		private static const TOTAL_PREFETCHES:Number = 5;
+		private static const TOTAL_PREFETCHES:Number = 4;
 		private var numPrefetched:Number;
 
 
 		public function ApplicationMediator(viewComponent:CmaticScoring) {
 			super(NAME, viewComponent);
 
-			facade.registerMediator(new IdScreenMediator(app.idScreen));
-			facade.registerMediator(new MainScreenMediator(app.mainScreen));
+			app.addEventListener(CmaticScoring.ID_SCREEN_CREATED, onIdScreenCreated);
+			app.addEventListener(CmaticScoring.LOADING_SCREEN_CREATED, onLoadingScreenCreated);
+			app.addEventListener(CmaticScoring.MAIN_SCREEN_CREATED, onMainScreenCreated);
+		}
+
+
+		private function onIdScreenCreated(event:Event):void {
+			if (!facade.hasMediator(IdScreenMediator.NAME)) {
+				facade.registerMediator(new IdScreenMediator(app.idScreen));
+			}
+		}
+
+
+		private function onLoadingScreenCreated(event:Event):void {
+			// TODO no loading screen mediator yet
+		}
+
+
+		private function onMainScreenCreated(event:Event):void {
+			if (!facade.hasMediator(MainScreenMediator.NAME)) {
+				facade.registerMediator(new MainScreenMediator(app.mainScreen));
+			}
 		}
 
 
@@ -46,7 +69,6 @@ package com.serkanet.cmaticscoring.views {
 				DivisionsProxy.LOAD_SUCCESS,
 				FormsProxy.LOAD_SUCCESS,
 				SexesProxy.LOAD_SUCCESS,
-				EventsProxy.LOAD_SUCCESS,
 
 				ApplicationFacade.PREFETCH_DATA
 			];
@@ -54,7 +76,7 @@ package com.serkanet.cmaticscoring.views {
 
 
 		override public function handleNotification(notification:INotification):void {
-			// Cases are sorted in the order we expect them
+			// Cases are sorted approximately in the order we expect them
 			switch (notification.getName()) {
 				case ApplicationFacade.VIEW_ID_SCREEN:
 					app.viewStack.selectedIndex = ID_SCREEN;
@@ -73,7 +95,6 @@ package com.serkanet.cmaticscoring.views {
 				case SexesProxy.LOAD_SUCCESS:
 				case AgeGroupsProxy.LOAD_SUCCESS:
 				case FormsProxy.LOAD_SUCCESS:
-				case EventsProxy.LOAD_SUCCESS:
 					trace("Got some prefetch: " + notification.getName());
 					numPrefetched++;
 					if (isPrefetchDone()) {
