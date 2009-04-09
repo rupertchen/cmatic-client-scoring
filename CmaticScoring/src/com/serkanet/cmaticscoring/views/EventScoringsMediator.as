@@ -4,6 +4,8 @@ package com.serkanet.cmaticscoring.views {
 
 	import flash.events.Event;
 
+	import mx.controls.Alert;
+
 	import org.puremvc.as3.patterns.mediator.Mediator;
 
 	public class EventScoringsMediator extends Mediator {
@@ -11,31 +13,30 @@ package com.serkanet.cmaticscoring.views {
 		public function EventScoringsMediator(mediatorName:String, viewComponent:EventScoringsPanel) {
 			super(mediatorName, viewComponent);
 
-			// TODO
-			// Find the matching proxy
 			// Set the data provider of the component
-			var proxy:EventScoringsProxy = facade.retrieveProxy(uid) as EventScoringsProxy;
-			eventScoringsPanel.scorings = proxy.scorings;
+			panel.scorings = proxy.scorings;
 
 			// attach event listeners to the component
-			eventScoringsPanel.addEventListener(EventScoringsPanel.CLOSE, onClose);
-			eventScoringsPanel.addEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
+			panel.addEventListener(EventScoringsPanel.CLOSE, onClose);
+			panel.addEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
 		}
 
 
-		private function get eventScoringsPanel(): EventScoringsPanel {
+		private function get panel(): EventScoringsPanel {
 			return viewComponent as EventScoringsPanel;
 		}
 
 
 		private function onClose(event:Event):void {
-			// TODO: prevent if there is unsaved data?
-			eventScoringsPanel.remove();
+			if (proxy.isSaveNeeded()) {
+				Alert.show("The event has unsaved changes. Please save or cancel the changes before closing", "Warning");
+				return;
+			}
+			panel.remove();
 		}
 
 
 		private function onRemoved(event:Event):void {
-			trace("do cleanup for mediator/proxy pair");
 			facade.removeMediator(uid);
 			facade.removeProxy(uid);
 		}
@@ -43,6 +44,11 @@ package com.serkanet.cmaticscoring.views {
 
 		private function get uid():String {
 			return mediatorName;
+		}
+
+
+		private function get proxy():EventScoringsProxy {
+			return facade.retrieveProxy(uid) as EventScoringsProxy;
 		}
 
 	}

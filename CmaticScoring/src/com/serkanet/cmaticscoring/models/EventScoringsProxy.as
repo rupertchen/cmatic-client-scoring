@@ -91,5 +91,15 @@ package com.serkanet.cmaticscoring.models {
 			scoringVo.name = "Retrieve real name";
 		}
 
+
+		public function isSaveNeeded():Boolean {
+			for each (var scoring:ScoringVo in scorings) {
+				if (scoring.needsSaving) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 	}
 }
