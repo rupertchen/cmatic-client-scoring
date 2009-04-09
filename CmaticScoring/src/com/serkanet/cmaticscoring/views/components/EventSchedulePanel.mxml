@@ -45,15 +45,13 @@
 				width="55"/>
 			<mx:DataGridColumn
 				dataField="code"
+				showDataTips="true" dataTipField="name"
 				headerText="Code"
 				width="50"/>
 			<mx:DataGridColumn
 				dataField="numCompetitors"
 				headerText="#"
 				width="30"/>
-			<mx:DataGridColumn
-				dataField="name"
-				headerText="Name"/>
 		</mx:columns>
 	</mx:DataGrid>
 
