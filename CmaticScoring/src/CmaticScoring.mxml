@@ -7,7 +7,6 @@
 
 	<mx:Script>
 		<![CDATA[
-			import mx.effects.easing.Exponential;
 			import com.serkanet.cmaticscoring.ApplicationFacade;
 
 			public static const ID_SCREEN_CREATED:String = "idScreenCreated";
@@ -22,16 +21,15 @@
 		]]>
 	</mx:Script>
 
-	<mx:Move id="slideIn" yFrom="5000" easingFunction="{Exponential.easeOut}" duration="1200"/>
-	<mx:Fade id="fadeOut" duration="1000" alphaFrom="1.0" alphaTo="0"/>
-	<mx:Fade id="fadeIn" duration="1000" alphaFrom="0" alphaTo="1.0"/>
+	<mx:Fade id="fadeOut" duration="500" alphaFrom="1" alphaTo="0"/>
+	<mx:Fade id="fadeIn" duration="500" alphaFrom="0" alphaTo="1"/>
 
 	<mx:Canvas top="0" right="0" bottom="0" left="0">
 		<mx:ViewStack id="viewStack" top="10" right="10" bottom="10" left="10"
 			resizeToContent="false">
 			<mx:VBox/>
-			<views:IdScreen id="idScreen" showEffect="slideIn" hideEffect="fadeOut" creationComplete="sendEvent(ID_SCREEN_CREATED)"/>
-			<!-- replace this with the progress bar -->
+			<views:IdScreen id="idScreen" showEffect="fadeIn" hideEffect="fadeOut" creationComplete="sendEvent(ID_SCREEN_CREATED)"/>
+			<!-- TODO: replace this with the progress bar -->
 			<mx:VBox id="loadingScreen" showEffect="fadeIn" hideEffect="fadeOut" creationComplete="sendEvent(LOADING_SCREEN_CREATED)"/>
 			<views:MainScreen id="mainScreen" showEffect="fadeIn" creationComplete="sendEvent(MAIN_SCREEN_CREATED)"/>
 			<mx:VBox showEffect="fadeIn">
