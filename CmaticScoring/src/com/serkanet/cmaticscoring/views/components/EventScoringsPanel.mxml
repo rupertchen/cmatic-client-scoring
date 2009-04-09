@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+	layout="absolute"
+	label="{eventCode}"
+	title="{eventName}">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+
+			public static const CLOSE:String = "close";
+
+			[Bindable]
+			public var eventCode:String;
+
+			[Bindable]
+			public var eventName:String;
+
+			[Bindable]
+			public var scorings:ArrayCollection;
+
+
+			public function remove():void {
+				parent.removeChild(this);
+			}
+
+
+			private function sendEvent(eventName:String):void {
+				dispatchEvent(new Event(eventName, true));
+			}
+
+		]]>
+	</mx:Script>
+
+	<mx:DataGrid
+		width="100%" height="100%"
+		draggableColumns="false"
+		dataProvider="{scorings}"
+		editable="true">
+		<mx:columns>
+			<!-- TODO: Fill with the real thing -->
+			<mx:DataGridColumn
+				dataField="order"
+				headerText="Order"/>
+			<mx:DataGridColumn
+				dataField="finalScore"
+				headerText="Final Score"/>
+		</mx:columns>
+	</mx:DataGrid>
+
+	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="Close" click="sendEvent(CLOSE)"/>
+	</mx:ControlBar>
+</mx:Panel>

@@ -2,7 +2,8 @@ package com.serkanet.cmaticscoring.views {
 	import com.serkanet.cmaticscoring.ApplicationFacade;
 	import com.serkanet.cmaticscoring.views.components.MainScreen;
 
-	import org.puremvc.as3.interfaces.INotification;
+	import flash.display.DisplayObject;
+
 	import org.puremvc.as3.patterns.mediator.Mediator;
 
 	public class MainScreenMediator extends Mediator {
@@ -20,6 +21,21 @@ package com.serkanet.cmaticscoring.views {
 
 		private function get mainScreen():MainScreen {
 			return viewComponent as MainScreen;
+		}
+
+
+		public function addTab(newTab:DisplayObject):void {
+			mainScreen.addTab(newTab);
+		}
+
+
+		public function hasTab(label:String):Boolean {
+			return mainScreen.hasTab(label);
+		}
+
+
+		public function bringTabUp(label:String):void {
+			mainScreen.bringTabUp(label);
 		}
 
 	}
