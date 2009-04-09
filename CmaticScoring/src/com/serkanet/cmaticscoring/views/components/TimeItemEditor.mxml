@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			public function get seconds():Number {
+				var split:Array = text.split(":", 2);
+				var minutes:Number = 0;
+				var seconds:Number = 0;
+				switch (split.length) {
+					case 1:
+						seconds = Number(split[0]);
+						break;
+					case 2:
+						minutes = Number(split[0]);
+						seconds = Number(split[1]);
+						break;
+				}
+
+				return (60 * minutes) + seconds;
+			}
+
+		]]>
+	</mx:Script>
+
+	<mx:RegExpValidator
+		source="{this}" property="text"
+		expression="^(\d+:)?\d+(\.\d+)?$"
+		triggerEvent="change"/>
+</mx:TextInput>

@@ -1,4 +1,5 @@
 package com.serkanet.cmaticscoring.views {
+	import com.serkanet.cmaticscoring.models.EventScoringsProxy;
 	import com.serkanet.cmaticscoring.views.components.EventScoringsPanel;
 
 	import flash.events.Event;
@@ -6,12 +7,15 @@ package com.serkanet.cmaticscoring.views {
 	import org.puremvc.as3.patterns.mediator.Mediator;
 
 	public class EventScoringsMediator extends Mediator {
+
 		public function EventScoringsMediator(mediatorName:String, viewComponent:EventScoringsPanel) {
 			super(mediatorName, viewComponent);
 
 			// TODO
 			// Find the matching proxy
 			// Set the data provider of the component
+			var proxy:EventScoringsProxy = facade.retrieveProxy(uid) as EventScoringsProxy;
+			eventScoringsPanel.scorings = proxy.scorings;
 
 			// attach event listeners to the component
 			eventScoringsPanel.addEventListener(EventScoringsPanel.CLOSE, onClose);
@@ -38,7 +42,7 @@ package com.serkanet.cmaticscoring.views {
 
 
 		private function get uid():String {
-			return getMediatorName();
+			return mediatorName;
 		}
 
 	}

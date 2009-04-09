@@ -1,4 +1,5 @@
 package com.serkanet.cmaticscoring.controllers {
+	import com.serkanet.cmaticscoring.models.EventScoringsProxy;
 	import com.serkanet.cmaticscoring.models.vos.EventVo;
 	import com.serkanet.cmaticscoring.views.EventScoringsMediator;
 	import com.serkanet.cmaticscoring.views.MainScreenMediator;
@@ -14,26 +15,24 @@ package com.serkanet.cmaticscoring.controllers {
 		override public function execute(notification:INotification):void {
 			var eventVo:EventVo = notification.getBody() as EventVo;
 
-			if (mainScreenMediator.hasTab(eventVo.code)) {
-				mainScreenMediator.bringTabUp(eventVo.code);
-				return;
+			if (!mainScreenMediator.hasTab(eventVo.code)) {
+				// Create component
+				var panel:EventScoringsPanel = new EventScoringsPanel();
+				panel.eventCode = eventVo.code;
+				panel.eventName = eventVo.name;
+				mainScreenMediator.addTab(panel);
+
+				// Create a pair of proxy and mediator
+				var uid:String = UIDUtil.createUID();
+				var proxy:EventScoringsProxy = new EventScoringsProxy(uid);
+				facade.registerProxy(proxy);
+				facade.registerMediator(new EventScoringsMediator(uid, panel));
+
+				// Fetch data
+				proxy.load("eventId", eventVo.id);
 			}
 
-			// Create component
-			var panel:EventScoringsPanel = new EventScoringsPanel();
-			panel.eventCode = eventVo.code;
-			panel.eventName = eventVo.name;
-			mainScreenMediator.addTab(panel);
-
-			// Pair the proxy and mediator
-			var uid:String = UIDUtil.createUID();
-
-			// Create proxy
-			// TODO: code
-
-			// create mediator
-			var mediator:EventScoringsMediator = new EventScoringsMediator(uid, panel);
-			facade.registerMediator(mediator);
+			mainScreenMediator.bringTabUp(eventVo.code);
 		}
 
 

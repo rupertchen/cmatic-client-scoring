@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:DataGridColumn xmlns="*" xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="65"
+	headerRenderer="mx.controls.Label"
+	itemRenderer="com.serkanet.cmaticscoring.views.components.PointsItemRenderer"
+	itemEditor="com.serkanet.cmaticscoring.views.components.GivenPointsItemEditor"
+	editorDataField="value"/>

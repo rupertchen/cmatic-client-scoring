@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:views="com.serkanet.cmaticscoring.views.components.*"
 	layout="absolute"
 	label="{eventCode}"
 	title="{eventName}">
 
 	<mx:Script>
 		<![CDATA[
+			import com.serkanet.cmaticscoring.models.vos.ScoringVo;
 			import mx.collections.ArrayCollection;
 
 			public static const CLOSE:String = "close";
@@ -29,6 +31,47 @@
 				dispatchEvent(new Event(eventName, true));
 			}
 
+
+			private function getDataTipForName(scoring:ScoringVo):String {
+				return scoring.name + " (" + scoring.id + ")";
+			}
+
+
+			private function timeLabelFunction(item:ScoringVo, column:DataGridColumn):String {
+				return formatTime(item[column.dataField]);
+			}
+
+
+			private function formatTime(seconds:Number):String {
+				if (isNaN(seconds)) {
+					return "--:--";
+				}
+
+				var minutes:Number = Math.floor(seconds / 60);
+				var seconds:Number = seconds % 60;
+				return minutes.toString()
+					+ ":"
+					+ ((seconds < 10) ? "0" : "")
+					+ seconds.toFixed(1);
+			}
+
+
+			private function finalScoreDataTipFunction(item:ScoringVo):String {
+				return item.finalScore
+					+ "\n(" + item.tieBreaker1
+					+ "/" + item.tieBreaker2
+					+ "/" + item.tieBreaker3
+					+ ")";
+			}
+
+
+			private function placementLabelFunction(item:ScoringVo, column:DataGridColumn):String {
+				if (0 == item.placement) {
+					return '--';
+				}
+				return item.placement.toString();
+			}
+
 		]]>
 	</mx:Script>
 
@@ -38,13 +81,69 @@
 		dataProvider="{scorings}"
 		editable="true">
 		<mx:columns>
-			<!-- TODO: Fill with the real thing -->
 			<mx:DataGridColumn
 				dataField="order"
-				headerText="Order"/>
+				headerRenderer="mx.controls.Label"
+				headerText="#"
+				width="40"
+				editable="true"
+				resizable="false"/>
+			<mx:DataGridColumn
+				dataField="name"
+				headerRenderer="mx.controls.Label"
+				headerText="Name"
+				editable="false"
+				showDataTips="true" dataTipFunction="getDataTipForName"/>
+			<views:DataGridGivenPointsColumn
+				dataField="score1"
+				headerText="Score 1"/>
+			<views:DataGridGivenPointsColumn
+				dataField="score2"
+				headerText="Score 2"/>
+			<views:DataGridGivenPointsColumn
+				dataField="score3"
+				headerText="Score 3"/>
+			<views:DataGridGivenPointsColumn
+				dataField="score4"
+				headerText="Score 4"/>
+			<views:DataGridGivenPointsColumn
+				dataField="score5"
+				headerText="Score 5"/>
+			<mx:DataGridColumn
+				dataField="time"
+				headerRenderer="mx.controls.Label"
+				headerText="Time"
+				width="65"
+				labelFunction="timeLabelFunction"
+				itemEditor="com.serkanet.cmaticscoring.views.components.TimeItemEditor"
+				editorDataField="seconds"/>
+			<views:DataGridDeductedPointsColumn
+				dataField="timeDeduction"
+				headerText="Time Deduction"/>
+			<views:DataGridDeductedPointsColumn
+				dataField="otherDeduction"
+				headerText="Other Deduction"/>
 			<mx:DataGridColumn
 				dataField="finalScore"
-				headerText="Final Score"/>
+				headerRenderer="mx.controls.Label"
+				headerText="Final Score"
+				width="55"
+				editable="false"
+				showDataTips="true" dataTipFunction="finalScoreDataTipFunction"
+				itemRenderer="com.serkanet.cmaticscoring.views.components.PointsItemRenderer"/>
+			<mx:DataGridColumn
+				dataField="placement"
+				headerRenderer="mx.controls.Label"
+				headerText="Placement"
+				width="40"
+				editable="false"
+				labelFunction="placementLabelFunction"/>
+			<mx:DataGridColumn
+				dataField="needsSaving"
+				width="10"
+				editable="false"
+				resizable="false"
+				itemRenderer="com.serkanet.cmaticscoring.views.components.NeedsSavingItemRenderer"/>
 		</mx:columns>
 	</mx:DataGrid>
 

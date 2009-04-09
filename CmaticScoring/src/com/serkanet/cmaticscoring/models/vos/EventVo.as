@@ -1,4 +1,6 @@
 package com.serkanet.cmaticscoring.models.vos {
+
+	[Bindable]
 	public class EventVo {
 
 		// Primary
