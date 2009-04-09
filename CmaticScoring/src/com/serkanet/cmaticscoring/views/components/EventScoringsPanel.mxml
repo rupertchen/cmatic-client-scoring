@@ -101,7 +101,7 @@
 			<mx:DataGridColumn
 				dataField="order"
 				headerRenderer="mx.controls.Label"
-				headerText="#"
+				headerText="Order"
 				width="40"
 				editable="true"
 				resizable="false"/>

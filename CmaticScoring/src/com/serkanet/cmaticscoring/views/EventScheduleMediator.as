@@ -4,6 +4,8 @@ package com.serkanet.cmaticscoring.views {
 	import com.serkanet.cmaticscoring.views.components.EventSchedulePanel;
 
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 
 	import org.puremvc.as3.patterns.mediator.Mediator;
 
@@ -15,30 +17,27 @@ package com.serkanet.cmaticscoring.views {
 		public function EventScheduleMediator(viewComponent:EventSchedulePanel) {
 			super(NAME, viewComponent);
 
-			var eventsProxy:EventsProxy = facade.retrieveProxy(EventsProxy.NAME) as EventsProxy;
-			eventsProxy.load("ringId", ApplicationFacade.getConfigProxy().appConfig.ringNumber.toString());
-			eventSchedulePanel.events = eventsProxy.events;
+			proxy.load("ringId", ApplicationFacade.getConfigProxy().appConfig.ringNumber.toString());
+			panel.events = proxy.events;
 
-			eventSchedulePanel.addEventListener(EventSchedulePanel.REFRESH_SCHEDULE, onRefreshSchedule);
-			eventSchedulePanel.addEventListener(EventSchedulePanel.SELECT_EVENT, onSelectEvent);
-			eventSchedulePanel.addEventListener(EventSchedulePanel.TOGGLE_SHOW_FINISHED, onToggleShowFinished);
+			panel.addEventListener(EventSchedulePanel.REFRESH_SCHEDULE, onRefreshSchedule);
+			panel.addEventListener(EventSchedulePanel.SELECT_EVENT, onSelectEvent);
+			panel.addEventListener(EventSchedulePanel.TOGGLE_SHOW_FINISHED, onToggleShowFinished);
 		}
 
 
-		private function get eventSchedulePanel():EventSchedulePanel {
+		private function get panel():EventSchedulePanel {
 			return viewComponent as EventSchedulePanel;
 		}
 
 
 		private function onRefreshSchedule(event:Event):void {
-			// TODO: code
-			trace("refresh schedule");
+			proxy.reload();
 		}
 
 
 		private function onSelectEvent(event:Event):void {
-			trace("select event");
-			sendNotification(ApplicationFacade.OPEN_EVENT, eventSchedulePanel.selectedEvent);
+			sendNotification(ApplicationFacade.OPEN_EVENT, panel.selectedEvent);
 		}
 
 
@@ -47,5 +46,9 @@ package com.serkanet.cmaticscoring.views {
 			trace("toggle show finished");
 		}
 
+
+		private function get proxy():EventsProxy {
+			return facade.retrieveProxy(EventsProxy.NAME) as EventsProxy;
+		}
 	}
 }

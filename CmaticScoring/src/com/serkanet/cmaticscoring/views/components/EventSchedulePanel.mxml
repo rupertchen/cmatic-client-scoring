@@ -37,7 +37,8 @@
 		draggableColumns="false"
 		width="100%" height="100%"
 		dataProvider="{events}"
-		itemClick="onItemClick()">
+		itemClick="onItemClick()"
+		resizableColumns="false">
 		<mx:columns>
 			<mx:DataGridColumn
 				dataField="order"
