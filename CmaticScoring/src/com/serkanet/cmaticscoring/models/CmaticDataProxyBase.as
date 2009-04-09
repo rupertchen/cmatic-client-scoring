@@ -94,15 +94,23 @@ package com.serkanet.cmaticscoring.models {
 		}
 
 
-		public function getFieldFromid(id:String, field:String):String {
+		public function getVoFromId(id:String):Object {
+			// TODO: Linear search can be slow, consider making this a map.
 			var vos:ArrayCollection = data as ArrayCollection;
-
-			for each (var vo:* in vos) {
+			for each (var vo:Object in vos) {
 				if (vo.id == id) {
-					return vo[field];
+					return vo;
 				}
 			}
+			return null;
+		}
 
+
+		public function getFieldFromId(id:String, field:String):String {
+			var vo:Object = getVoFromId(id);
+			if (vo) {
+				return vo[field];
+			}
 			return null;
 		}
 	}

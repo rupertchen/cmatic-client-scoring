@@ -1,9 +1,10 @@
 package com.serkanet.cmaticscoring.views {
 	import com.serkanet.cmaticscoring.ApplicationFacade;
 	import com.serkanet.cmaticscoring.models.AgeGroupsProxy;
+	import com.serkanet.cmaticscoring.models.CompetitorsProxy;
 	import com.serkanet.cmaticscoring.models.DivisionsProxy;
-	import com.serkanet.cmaticscoring.models.EventsProxy;
 	import com.serkanet.cmaticscoring.models.FormsProxy;
+	import com.serkanet.cmaticscoring.models.GroupsProxy;
 	import com.serkanet.cmaticscoring.models.SexesProxy;
 
 	import flash.events.Event;
@@ -26,7 +27,7 @@ package com.serkanet.cmaticscoring.views {
 		// TODO: This must be manually kept in sync with the number of prefetches in PrefetchDataCommand.
 		// Factor this out into a separate prefetch proxy so the command can set the number at the same
 		// place it does the loads.
-		private static const TOTAL_PREFETCHES:Number = 4;
+		private static const TOTAL_PREFETCHES:Number = 6;
 		private var numPrefetched:Number;
 
 
@@ -65,9 +66,12 @@ package com.serkanet.cmaticscoring.views {
 
 				ConfigProxy.FAILURE,
 				ConfigProxy.SUCCESS,
+
 				AgeGroupsProxy.LOAD_SUCCESS,
+				CompetitorsProxy.LOAD_SUCCESS,
 				DivisionsProxy.LOAD_SUCCESS,
 				FormsProxy.LOAD_SUCCESS,
+				GroupsProxy.LOAD_SUCCESS,
 				SexesProxy.LOAD_SUCCESS,
 
 				ApplicationFacade.PREFETCH_DATA
@@ -91,10 +95,12 @@ package com.serkanet.cmaticscoring.views {
 				case ApplicationFacade.PREFETCH_DATA:
 					app.viewStack.selectedIndex = LOADING_SCREEN;
 					break;
-				case DivisionsProxy.LOAD_SUCCESS:
-				case SexesProxy.LOAD_SUCCESS:
 				case AgeGroupsProxy.LOAD_SUCCESS:
+				case CompetitorsProxy.LOAD_SUCCESS:
+				case DivisionsProxy.LOAD_SUCCESS:
 				case FormsProxy.LOAD_SUCCESS:
+				case GroupsProxy.LOAD_SUCCESS:
+				case SexesProxy.LOAD_SUCCESS:
 					trace("Got some prefetch: " + notification.getName());
 					numPrefetched++;
 					if (isPrefetchDone()) {

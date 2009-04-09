@@ -1,4 +1,5 @@
 package com.serkanet.cmaticscoring.models {
+	import com.serkanet.cmaticscoring.models.vos.CompetitorVo;
 	import com.serkanet.cmaticscoring.models.vos.ScoringVo;
 
 	import mx.collections.ArrayCollection;
@@ -66,7 +67,8 @@ package com.serkanet.cmaticscoring.models {
 			var vo:ScoringVo = new ScoringVo();
 			vo.id = record.id;
 			vo.order = record.order;
-			vo.name = record.competitorId;
+			vo.competitorId = record.competitorId;
+			vo.groupId = record.groupId;
 			vo.score1 = record.score0;
 			vo.score2 = record.score1;
 			vo.score3 = record.score2;
@@ -88,7 +90,14 @@ package com.serkanet.cmaticscoring.models {
 
 
 		private function populateDerivedFields(scoringVo:ScoringVo):void {
-			scoringVo.name = "Retrieve real name";
+			if (scoringVo.competitorId) {
+				var competitorsProxy:CompetitorsProxy = facade.retrieveProxy(CompetitorsProxy.NAME) as CompetitorsProxy;
+				var competitorVo:CompetitorVo = competitorsProxy.getVoFromId(scoringVo.competitorId) as CompetitorVo;
+				scoringVo.name = competitorVo.firstName + " " + competitorVo.lastName;
+			} else if (scoringVo.groupId) {
+				var groupsProxy:GroupsProxy = facade.retrieveProxy(GroupsProxy.NAME) as GroupsProxy;
+				scoringVo.name = groupsProxy.getFieldFromId(scoringVo.groupId, "name");
+			}
 		}
 
 

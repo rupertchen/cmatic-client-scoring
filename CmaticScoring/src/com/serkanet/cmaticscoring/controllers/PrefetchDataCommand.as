@@ -1,9 +1,9 @@
 package com.serkanet.cmaticscoring.controllers {
-	import com.serkanet.cmaticscoring.ApplicationFacade;
 	import com.serkanet.cmaticscoring.models.AgeGroupsProxy;
+	import com.serkanet.cmaticscoring.models.CompetitorsProxy;
 	import com.serkanet.cmaticscoring.models.DivisionsProxy;
-	import com.serkanet.cmaticscoring.models.EventsProxy;
 	import com.serkanet.cmaticscoring.models.FormsProxy;
+	import com.serkanet.cmaticscoring.models.GroupsProxy;
 	import com.serkanet.cmaticscoring.models.SexesProxy;
 
 	import org.puremvc.as3.interfaces.INotification;
@@ -12,17 +12,14 @@ package com.serkanet.cmaticscoring.controllers {
 	public class PrefetchDataCommand extends SimpleCommand {
 
 		override public function execute(notification:INotification):void {
-			var divisions:DivisionsProxy = facade.retrieveProxy(DivisionsProxy.NAME) as DivisionsProxy;
-			divisions.load();
-
-			var sexes:SexesProxy = facade.retrieveProxy(SexesProxy.NAME) as SexesProxy;
-			sexes.load();
-
-			var ageGroups:AgeGroupsProxy = facade.retrieveProxy(AgeGroupsProxy.NAME) as AgeGroupsProxy;
-			ageGroups.load();
-
-			var forms:FormsProxy = facade.retrieveProxy(FormsProxy.NAME) as FormsProxy;
-			forms.load();
+			// When a prefetch is added or removed from here, update ApplicationMediator.TOTAL_PREFETCHES
+			// and the notifications it listens for.
+			DivisionsProxy(facade.retrieveProxy(DivisionsProxy.NAME)).load();
+			SexesProxy(facade.retrieveProxy(SexesProxy.NAME)).load();
+			AgeGroupsProxy(facade.retrieveProxy(AgeGroupsProxy.NAME)).load()
+			FormsProxy(facade.retrieveProxy(FormsProxy.NAME)).load();
+			GroupsProxy(facade.retrieveProxy(GroupsProxy.NAME)).load();
+			CompetitorsProxy(facade.retrieveProxy(CompetitorsProxy.NAME)).load();
 		}
 
 	}

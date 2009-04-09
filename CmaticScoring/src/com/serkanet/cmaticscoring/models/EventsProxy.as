@@ -59,10 +59,10 @@ package com.serkanet.cmaticscoring.models {
 			var ageGroupsProxy:AgeGroupsProxy = facade.retrieveProxy(AgeGroupsProxy.NAME) as AgeGroupsProxy;
 			var formsProxy:FormsProxy = facade.retrieveProxy(FormsProxy.NAME) as FormsProxy;
 
-			var division:String = divisionsProxy ? divisionsProxy.getFieldFromid(eventVo.divisionId, "longName") : null;
-			var sex:String = sexesProxy ? sexesProxy.getFieldFromid(eventVo.sexId, "longName") : null;
-			var ageGroup:String = ageGroupsProxy ? ageGroupsProxy.getFieldFromid(eventVo.ageGroupId, "longName") : null;
-			var form:String = formsProxy ? formsProxy.getFieldFromid(eventVo.formId, "longName") : null;
+			var division:String = divisionsProxy ? divisionsProxy.getFieldFromId(eventVo.divisionId, "longName") : null;
+			var sex:String = sexesProxy ? sexesProxy.getFieldFromId(eventVo.sexId, "longName") : null;
+			var ageGroup:String = ageGroupsProxy ? ageGroupsProxy.getFieldFromId(eventVo.ageGroupId, "longName") : null;
+			var form:String = formsProxy ? formsProxy.getFieldFromId(eventVo.formId, "longName") : null;
 
 			var eventName:String = division + " " + sex + " " + ageGroup + " " + form;
 

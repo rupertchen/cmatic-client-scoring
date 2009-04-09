@@ -36,7 +36,10 @@
 
 
 			private function getDataTipForName(scoring:ScoringVo):String {
-				return scoring.name + " (" + scoring.id + ")";
+				if (scoring.competitorId) {
+					return scoring.name + " (" + scoring.competitorId + ")";
+				}
+				return scoring.name;
 			}
 
 
