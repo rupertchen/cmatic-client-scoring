@@ -64,9 +64,15 @@ package com.serkanet.cmaticscoring.models {
 			var ageGroup:String = ageGroupsProxy ? ageGroupsProxy.getFieldFromid(eventVo.ageGroupId, "longName") : null;
 			var form:String = formsProxy ? formsProxy.getFieldFromid(eventVo.formId, "longName") : null;
 
-			// TODO: Do proper null checks.
-			// Filter out N/A from the name
-			eventVo.name = division + " " + sex + " " + ageGroup + " " + form;
+			var eventName:String = division + " " + sex + " " + ageGroup + " " + form;
+
+			// Remove N/A
+			eventName = eventName.replace(/n\/a/gi, " ");
+			// Compress whitespace
+			eventName = eventName.replace(/\s+/g, " ");
+			// Trim whitespace
+			eventName = eventName.replace(/^\s+/, "").replace(/\s+$/, "");
+			eventVo.name = eventName;
 		}
 
 
