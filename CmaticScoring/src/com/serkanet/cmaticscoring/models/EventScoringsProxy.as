@@ -92,6 +92,14 @@ package com.serkanet.cmaticscoring.models {
 		}
 
 
+		override public function reload():void {
+			for each (var scoring:ScoringVo in scorings) {
+				facade.removeProxy(ScoringProxy.getName(scoring.id));
+			}
+			super.reload();
+		}
+
+
 		public function isSaveNeeded():Boolean {
 			for each (var scoring:ScoringVo in scorings) {
 				if (scoring.needsSaving) {

@@ -18,6 +18,7 @@ package com.serkanet.cmaticscoring.views {
 
 			// attach event listeners to the component
 			panel.addEventListener(EventScoringsPanel.CLOSE, onClose);
+			panel.addEventListener(EventScoringsPanel.RELOAD_SCORINGS, onReloadScorings);
 			panel.addEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
 		}
 
@@ -33,6 +34,11 @@ package com.serkanet.cmaticscoring.views {
 				return;
 			}
 			panel.remove();
+		}
+
+
+		private function onReloadScorings(event:Event):void {
+			proxy.reload();
 		}
 
 

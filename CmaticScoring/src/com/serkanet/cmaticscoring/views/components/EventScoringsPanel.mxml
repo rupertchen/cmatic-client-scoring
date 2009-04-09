@@ -7,10 +7,13 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.events.CloseEvent;
+			import mx.controls.Alert;
 			import com.serkanet.cmaticscoring.models.vos.ScoringVo;
 			import mx.collections.ArrayCollection;
 
 			public static const CLOSE:String = "close";
+			public static const RELOAD_SCORINGS:String = "reloadScorings";
 
 			[Bindable]
 			public var eventCode:String;
@@ -70,6 +73,17 @@
 					return '--';
 				}
 				return item.placement.toString();
+			}
+
+
+			private function onClickCancelChanges():void {
+				var onClose:Function = function (event:CloseEvent):void {
+					if (Alert.YES == event.detail) {
+						sendEvent(RELOAD_SCORINGS);
+					}
+				};
+				Alert.show("Are you sure you want to cancel all changes? There is no undo.", "Warning",
+					Alert.YES | Alert.NO, null, onClose, null, Alert.NO);
 			}
 
 		]]>
@@ -148,6 +162,7 @@
 	</mx:DataGrid>
 
 	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="Cancel Changes" click="onClickCancelChanges()"/>
 		<mx:Button label="Close" click="sendEvent(CLOSE)"/>
 	</mx:ControlBar>
 </mx:Panel>
