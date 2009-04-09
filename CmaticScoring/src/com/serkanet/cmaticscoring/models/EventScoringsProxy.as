@@ -43,10 +43,18 @@ package com.serkanet.cmaticscoring.models {
 			switch (event.kind) {
 				case CollectionEventKind.UPDATE:
 					for each (var propertyChangeEvent:PropertyChangeEvent in event.items) {
-						if (propertyChangeEvent.newValue != propertyChangeEvent.oldValue) {
-							var scoring:ScoringVo = propertyChangeEvent.source as ScoringVo;
-							getScoringProxy(scoring).onChange(propertyChangeEvent);
-						}
+						// ADOBE BUG:
+						// When the a property change causes the data grid to reorder itself, a "move" event is received before the
+						// "update". When the "update" event is received, the old and new values are both null, appearing as if there
+						// was no change. Because we're not doing anything too expensive, a suitable work around is to act as if
+						// something has changed.
+						//
+//						if (propertyChangeEvent.newValue != propertyChangeEvent.oldValue) {
+//							var scoring:ScoringVo = propertyChangeEvent.source as ScoringVo;
+//							getScoringProxy(scoring).onChange(propertyChangeEvent);
+//						}
+						var scoring:ScoringVo = propertyChangeEvent.source as ScoringVo;
+						getScoringProxy(scoring).onChange(propertyChangeEvent);
 					}
 					break;
 			}
