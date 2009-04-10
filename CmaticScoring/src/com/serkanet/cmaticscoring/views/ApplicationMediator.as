@@ -48,7 +48,9 @@ package com.serkanet.cmaticscoring.views {
 
 
 		private function onLoadingScreenCreated(event:Event):void {
-			// TODO no loading screen mediator yet
+			if (!facade.hasMediator(LoadingScreenMediator.NAME)) {
+				facade.registerMediator(new LoadingScreenMediator(app.loadingScreen));
+			}
 		}
 
 
@@ -101,8 +103,9 @@ package com.serkanet.cmaticscoring.views {
 				case FormsProxy.LOAD_SUCCESS:
 				case GroupsProxy.LOAD_SUCCESS:
 				case SexesProxy.LOAD_SUCCESS:
-					trace("Got some prefetch: " + notification.getName());
+					trace("Prefetched: " + notification.getName());
 					numPrefetched++;
+					sendNotification(ApplicationFacade.LOADING_STEP, numPrefetched / TOTAL_PREFETCHES * 100);
 					if (isPrefetchDone()) {
 						sendNotification(ApplicationFacade.VIEW_MAIN_SCREEN);
 					}

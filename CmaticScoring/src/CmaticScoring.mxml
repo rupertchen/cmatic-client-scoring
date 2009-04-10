@@ -30,7 +30,7 @@
 			<mx:VBox/>
 			<views:IdScreen id="idScreen" showEffect="fadeIn" hideEffect="fadeOut" creationComplete="sendEvent(ID_SCREEN_CREATED)"/>
 			<!-- TODO: replace this with the progress bar -->
-			<mx:VBox id="loadingScreen" showEffect="fadeIn" hideEffect="fadeOut" creationComplete="sendEvent(LOADING_SCREEN_CREATED)"/>
+			<views:LoadingScreen id="loadingScreen" showEffect="fadeIn" hideEffect="fadeOut" creationComplete="sendEvent(LOADING_SCREEN_CREATED)"/>
 			<views:MainScreen id="mainScreen" showEffect="fadeIn" creationComplete="sendEvent(MAIN_SCREEN_CREATED)"/>
 			<mx:VBox showEffect="fadeIn">
 				<mx:Canvas width="100%" height="100%">

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+		<![CDATA[
+			private static const PROGRESS_BAR_MAX:Number = 100;
+
+			public function setProgress(progress:Number):void {
+				progressBar.setProgress(progress, PROGRESS_BAR_MAX);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:VBox
+		width="100%" height="100%"
+		horizontalAlign="center" verticalAlign="middle">
+		<mx:ProgressBar id="progressBar"
+			minimum="0" maximum="{PROGRESS_BAR_MAX}"
+			direction="right"
+			mode="manual"
+			width="400"/>
+	</mx:VBox>
+</mx:Canvas>

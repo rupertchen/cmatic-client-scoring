@@ -9,26 +9,26 @@ package com.serkanet.cmaticscoring.views {
 
 	public class IdScreenMediator extends Mediator {
 
-		public static const NAME:String = "IdScreenMediator";
+		public static const NAME:String = "IdScreen";
 
 
 		public function IdScreenMediator(viewComponent:IdScreen) {
 			super(mediatorName, viewComponent);
 
-			idScreen.addEventListener(IdScreen.START_SCORING, onStartScoring);
+			screen.addEventListener(IdScreen.START_SCORING, onStartScoring);
 		}
 
 
-		private function get idScreen():IdScreen {
+		private function get screen():IdScreen {
 			return viewComponent as IdScreen;
 		}
 
 
 		private function onStartScoring(event:Event):void {
-			if (isNaN(idScreen.selectedRing)) {
-				idScreen.statusMessage = "Please select a ring.";
+			if (isNaN(screen.selectedRing)) {
+				screen.statusMessage = "Please select a ring.";
 			} else {
-				ApplicationFacade.getConfigProxy().appConfig.ringNumber = idScreen.selectedRing;
+				ApplicationFacade.getConfigProxy().appConfig.ringNumber = screen.selectedRing;
 				sendNotification(ApplicationFacade.LOAD_CONFIG);
 			}
 		}

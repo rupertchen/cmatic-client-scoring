@@ -23,6 +23,7 @@ package com.serkanet.cmaticscoring {
 		// view
 		public static const VIEW_ID_SCREEN:String = "viewIdScreen";
 		public static const VIEW_MAIN_SCREEN:String = "viewMainScreen";
+		public static const LOADING_STEP:String = "loadingStep";
 
 
 		public static function getInstance():ApplicationFacade {

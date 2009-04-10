@@ -8,34 +8,34 @@ package com.serkanet.cmaticscoring.views {
 
 	public class MainScreenMediator extends Mediator {
 
-		public static const NAME:String = "MainScreenMediator";
+		public static const NAME:String = "MainScreen";
 
 
 		public function MainScreenMediator(viewComponent:MainScreen) {
 			super(NAME, viewComponent);
 
-			mainScreen.title = "Currently Scoring for Ring " + ApplicationFacade.getConfigProxy().appConfig.ringNumber;
-			facade.registerMediator(new EventScheduleMediator(mainScreen.eventSchedule));
+			screen.title = "Currently Scoring for Ring " + ApplicationFacade.getConfigProxy().appConfig.ringNumber;
+			facade.registerMediator(new EventScheduleMediator(screen.eventSchedule));
 		}
 
 
-		private function get mainScreen():MainScreen {
+		private function get screen():MainScreen {
 			return viewComponent as MainScreen;
 		}
 
 
 		public function addTab(newTab:DisplayObject):void {
-			mainScreen.addTab(newTab);
+			screen.addTab(newTab);
 		}
 
 
 		public function hasTab(label:String):Boolean {
-			return mainScreen.hasTab(label);
+			return screen.hasTab(label);
 		}
 
 
 		public function bringTabUp(label:String):void {
-			mainScreen.bringTabUp(label);
+			screen.bringTabUp(label);
 		}
 
 	}
