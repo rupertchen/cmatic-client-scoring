@@ -1,4 +1,7 @@
 package com.serkanet.cmaticscoring.models {
+	import com.adobe.serialization.json.JSON;
+	import com.serkanet.cmaticscoring.models.delegates.SaveCmaticDataDelegate;
+	import com.serkanet.cmaticscoring.models.responders.EventScoringsProxySaveResponder;
 	import com.serkanet.cmaticscoring.models.vos.CompetitorVo;
 	import com.serkanet.cmaticscoring.models.vos.ScoringVo;
 
@@ -8,12 +11,18 @@ package com.serkanet.cmaticscoring.models {
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
 	import mx.events.PropertyChangeEvent;
+	import mx.rpc.Fault;
+	import mx.rpc.events.FaultEvent;
+
+	import org.puremvc.as3.utilities.flex.config.model.ConfigProxy;
 
 
 	public class EventScoringsProxy extends CmaticDataProxyBase {
 
 		public static const LOAD_SUCCESS:String = NAME + "/load/success";
 		public static const LOAD_FAILURE:String = NAME + "/load/failure";
+		public static const SAVE_SUCCESS:String = NAME + "/save/success";
+		public static const SAVE_FAILURE:String = NAME + "/save/failure";
 
 		private static const NAME:String = "EventScorings";
 		private static const TYPE:String = "scoring"
@@ -43,18 +52,19 @@ package com.serkanet.cmaticscoring.models {
 			switch (event.kind) {
 				case CollectionEventKind.UPDATE:
 					for each (var propertyChangeEvent:PropertyChangeEvent in event.items) {
-						// ADOBE BUG:
-						// When the a property change causes the data grid to reorder itself, a "move" event is received before the
-						// "update". When the "update" event is received, the old and new values are both null, appearing as if there
-						// was no change. Because we're not doing anything too expensive, a suitable work around is to act as if
-						// something has changed.
-						//
-//						if (propertyChangeEvent.newValue != propertyChangeEvent.oldValue) {
-//							var scoring:ScoringVo = propertyChangeEvent.source as ScoringVo;
-//							getScoringProxy(scoring).onChange(propertyChangeEvent);
-//						}
-						var scoring:ScoringVo = propertyChangeEvent.source as ScoringVo;
-						getScoringProxy(scoring).onChange(propertyChangeEvent);
+						if (propertyChangeEvent.newValue != propertyChangeEvent.oldValue) {
+							var updated_scoring:ScoringVo = propertyChangeEvent.source as ScoringVo;
+							getScoringProxy(updated_scoring).onChange(propertyChangeEvent);
+						}
+					}
+					break;
+				case CollectionEventKind.MOVE:
+					// ADOBE BUG:
+					// When the a property change causes the data grid to reorder itself, a "move" event is received before the
+					// "update". When the "update" event is received, the old and new values are both null, appearing as if there
+					// was no change.
+					for each (var moved_scoring:ScoringVo in event.items) {
+						moved_scoring.needsSaving = true;
 					}
 					break;
 			}
@@ -62,6 +72,10 @@ package com.serkanet.cmaticscoring.models {
 
 
 		private function getScoringProxy(scoring:ScoringVo):ScoringProxy {
+			// TODO It doesn't seem like ScoringProxy is necessary.
+			// All of its functionality could be extracted to a set of helper utilities
+			// and then we wouldn't have to worry about managing the cached Proxy
+			// or possibly having an out of date reference to a VO.
 			var proxy:ScoringProxy = facade.retrieveProxy(ScoringProxy.getName(scoring.id)) as ScoringProxy;
 			if (!proxy) {
 				proxy = new ScoringProxy(scoring);
@@ -126,5 +140,60 @@ package com.serkanet.cmaticscoring.models {
 			return false;
 		}
 
+
+		public function save():void {
+			trace("save scorings");
+
+			// Create save objects
+			var records:Array = new Array();
+			for each (var scoring:ScoringVo in scorings) {
+				records.push(makeSaveEntry(scoring));
+			}
+
+			// Save
+			var configProxy:AppConfigProxy = facade.retrieveProxy(ConfigProxy.NAME) as AppConfigProxy;
+			var delegate:SaveCmaticDataDelegate = new SaveCmaticDataDelegate(configProxy.appConfig.setService, TYPE, records);
+			delegate.save(new EventScoringsProxySaveResponder(this));
+		}
+
+
+		public function resultSave(resultData:Object):void {
+			var result:Object = JSON.decode(resultData.result);
+			if (result.success) {
+				// It's debatable whether it is better to force a reload so problems are noticed sooner or if it is better
+				// to not reload so any temporary corruption does not also corrupt the client's local copy.
+				reload();
+			} else {
+				var faultMessage:Fault = new Fault(SAVE_FAILURE, "Save Failed");
+				fault(new FaultEvent(FaultEvent.FAULT, false, false, faultMessage));
+			}
+		}
+
+
+		public function faultSave(d:Object):void {
+			trace("fault saving scorings: " + proxyName);
+			sendNotification(SAVE_FAILURE);
+		}
+
+
+		private function makeSaveEntry(scoring:ScoringVo):Object {
+			var entry:Object = new Object();
+			entry.id = scoring.id;
+			entry.order = scoring.order;
+			entry.score0 = scoring.score1;
+			entry.score1 = scoring.score2;
+			entry.score2 = scoring.score3;
+			entry.score3 = scoring.score4;
+			entry.score4 = scoring.score5;
+			entry.time = scoring.time;
+			entry.timeDeduction = scoring.timeDeduction;
+			entry.otherDeduction = scoring.otherDeduction;
+			entry.finalScore = scoring.finalScore;
+			entry.tieBreaker0 = scoring.tieBreaker1;
+			entry.tieBreaker1 = scoring.tieBreaker2;
+			entry.tieBreaker2 = scoring.tieBreaker3;
+			entry.placement = scoring.placement;
+			return entry;
+		}
 	}
 }

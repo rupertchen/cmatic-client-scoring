@@ -14,6 +14,9 @@
 
 			public static const CLOSE:String = "close";
 			public static const RELOAD_SCORINGS:String = "reloadScorings";
+			public static const SAVE_SCORINGS:String = "saveScorings";
+			public static const SHUFFLE_ORDERS:String = "shuffleOrders";
+			public static const END_EVENT:String = "endEvent";
 
 			[Bindable]
 			public var eventCode:String;
@@ -165,6 +168,10 @@
 	</mx:DataGrid>
 
 	<mx:ControlBar horizontalAlign="right">
+		<mx:Button label="Shuffle Order" click="sendEvent(SHUFFLE_ORDERS)"/>
+		<mx:Button label="End Event" click="sendEvent(END_EVENT)"
+			toolTip="Ending an event will rank the competitors and prevent further changes."/>
+		<mx:Button label="Save Changes" click="sendEvent(SAVE_SCORINGS)"/>
 		<mx:Button label="Cancel Changes" click="onClickCancelChanges()"/>
 		<mx:Button label="Close" click="sendEvent(CLOSE)"/>
 	</mx:ControlBar>

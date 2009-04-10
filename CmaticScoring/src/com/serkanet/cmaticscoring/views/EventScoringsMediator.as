@@ -19,7 +19,8 @@ package com.serkanet.cmaticscoring.views {
 			// attach event listeners to the component
 			panel.addEventListener(EventScoringsPanel.CLOSE, onClose);
 			panel.addEventListener(EventScoringsPanel.RELOAD_SCORINGS, onReloadScorings);
-			panel.addEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
+			panel.addEventListener(EventScoringsPanel.SAVE_SCORINGS, onSaveScorings);
+			panel.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 
 
@@ -42,7 +43,12 @@ package com.serkanet.cmaticscoring.views {
 		}
 
 
-		private function onRemoved(event:Event):void {
+		private function onSaveScorings(event:Event):void {
+			proxy.save();
+		}
+
+
+		private function onRemovedFromStage(event:Event):void {
 			facade.removeMediator(uid);
 			facade.removeProxy(uid);
 		}

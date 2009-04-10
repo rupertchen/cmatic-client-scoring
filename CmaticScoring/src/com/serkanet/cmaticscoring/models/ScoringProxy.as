@@ -3,11 +3,12 @@ package com.serkanet.cmaticscoring.models {
 	import com.serkanet.cmaticscoring.models.vos.ScoringVo;
 
 	import mx.events.PropertyChangeEvent;
+	import mx.rpc.IResponder;
 
 	import org.puremvc.as3.patterns.proxy.Proxy;
 
 
-	public class ScoringProxy extends Proxy {
+	public class ScoringProxy extends Proxy implements IResponder {
 
 		public static const NAME:String = "ScoringProxy";
 
@@ -123,9 +124,14 @@ package com.serkanet.cmaticscoring.models {
 		}
 
 
-		public function save():void {
-			trace("Saving scoring (" + scoring.id + ") back to server with final score (" + scoring.finalScore + ")");
+		public function result(resultData:Object):void {
+			trace("Scoring proxy succesful save");
 			scoring.needsSaving = false;
+		}
+
+
+		public function fault(data:Object):void {
+			trace("Scoring proxy failed save");
 		}
 
 

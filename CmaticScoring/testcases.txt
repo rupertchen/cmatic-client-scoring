@@ -11,3 +11,20 @@ IdScreen
 Main Screen
 	Resize browser
 		Main screen matches size, but retains slight padding from the edge.
+
+Event Scorings
+	Changing order manually
+		Order changes, row is flagged as red
+	Change any score, deduction, time
+		Updates final score and tie breaker
+		Updates placement
+	Try to enter invalid characters in to points
+		Don't add the characters
+	Add invalid number like .......23452...234324...
+		Zero it out
+	Add time in just seconds
+		Convert display to mm:ss
+	Add time in mm:ss
+		Display agrees after carrying over any extra seconds
+	Add invalid time
+		Consider it null. Will show --:-- temporarily, but load as 0 next time
