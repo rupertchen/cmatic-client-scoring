@@ -25,7 +25,7 @@ package com.serkanet.cmaticscoring.controllers {
 
 				// Create a pair of proxy and mediator
 				var uid:String = UIDUtil.createUID();
-				var proxy:EventScoringsProxy = new EventScoringsProxy(uid);
+				var proxy:EventScoringsProxy = new EventScoringsProxy(uid, eventVo.isNandu);
 				facade.registerProxy(proxy);
 				facade.registerMediator(new EventScoringsMediator(uid, panel));
 

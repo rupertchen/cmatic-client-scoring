@@ -33,3 +33,7 @@ Event Scorings
 		all rows that were moved will become red.
 	Placements will be computed when requested
 		Clicking on "update ranks" will re-rank all competitors
+	Nandu scoring
+		On nandu events (currently in ring 3, look for 33 and 34), there should be a sixth column
+		Final scores are a sum of all given scores divided by 2
+		There are no tiebreakers (all 0).

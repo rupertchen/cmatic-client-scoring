@@ -13,6 +13,7 @@ package com.serkanet.cmaticscoring.models.vos {
 		public var score3:Number;
 		public var score4:Number;
 		public var score5:Number;
+		public var score6:Number;
 		public var time:Number;
 		public var timeDeduction:Number;
 		public var otherDeduction:Number;
@@ -25,5 +26,6 @@ package com.serkanet.cmaticscoring.models.vos {
 
 		// Derived
 		public var name:String;
+		public var isNandu:Boolean;
 	}
 }

@@ -45,7 +45,7 @@
 			<views:EventSchedulePanel id="eventSchedule" x="10" width="200" height="100%"/>
 			<mx:TabNavigator id="tabNavigator"
 				width="100%" height="100%">
-				<mx:Panel label="Welcome" width="100%" height="100" title="Welcome to CMATic Scoring Application">
+				<mx:Panel label="Welcome" width="100%" height="100" title="Welcome to the CMATic Scoring Application">
 					<mx:Text text="If you have any questions about the program, please ask for Rupert Chen." width="100%" height="100%"/>
 				</mx:Panel>
 			</mx:TabNavigator>

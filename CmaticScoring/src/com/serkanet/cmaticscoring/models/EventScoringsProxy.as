@@ -27,9 +27,12 @@ package com.serkanet.cmaticscoring.models {
 		private static const NAME:String = "EventScorings";
 		private static const TYPE:String = "scoring"
 
+		private var isNandu:Boolean;
 
-		public function EventScoringsProxy(uid:String) {
+
+		public function EventScoringsProxy(uid:String, isNandu:Boolean) {
 			super(uid, TYPE, LOAD_SUCCESS, LOAD_FAILURE);
+			this.isNandu = isNandu;
 			sortScoringsByOrder();
 			scorings.addEventListener(CollectionEvent.COLLECTION_CHANGE, onScoringsCollectionChange);
 		}
@@ -96,6 +99,7 @@ package com.serkanet.cmaticscoring.models {
 			vo.score3 = record.score2;
 			vo.score4 = record.score3;
 			vo.score5 = record.score4;
+			vo.score6 = record.score5;
 			vo.time = record.time;
 			vo.timeDeduction = record.timeDeduction;
 			vo.otherDeduction = record.otherDeduction;
@@ -120,6 +124,8 @@ package com.serkanet.cmaticscoring.models {
 				var groupsProxy:GroupsProxy = facade.retrieveProxy(GroupsProxy.NAME) as GroupsProxy;
 				scoringVo.name = groupsProxy.getFieldFromId(scoringVo.groupId, "name");
 			}
+
+			scoringVo.isNandu = isNandu;
 		}
 
 
@@ -185,6 +191,7 @@ package com.serkanet.cmaticscoring.models {
 			entry.score2 = scoring.score3;
 			entry.score3 = scoring.score4;
 			entry.score4 = scoring.score5;
+			entry.score5 = scoring.score6;
 			entry.time = scoring.time;
 			entry.timeDeduction = scoring.timeDeduction;
 			entry.otherDeduction = scoring.otherDeduction;

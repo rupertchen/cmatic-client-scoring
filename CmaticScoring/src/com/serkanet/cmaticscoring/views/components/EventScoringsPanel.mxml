@@ -3,7 +3,8 @@
 	xmlns:views="com.serkanet.cmaticscoring.views.components.*"
 	layout="absolute"
 	label="{eventVo.tabName}"
-	title="{eventVo.name}">
+	title="{eventVo.name}"
+	creationComplete="init()">
 
 	<mx:Script>
 		<![CDATA[
@@ -22,6 +23,8 @@
 			public static const RELOAD_SCORINGS:String = "reloadScorings";
 			public static const CLOSE:String = "close";
 
+			private static const SCORE6_COLUMN_INDEX:Number = 7;
+
 			[Bindable]
 			public var eventVo:EventVo;
 
@@ -37,6 +40,24 @@
 
 			public function remove():void {
 				parent.removeChild(this);
+			}
+
+
+			private function init():void {
+				if (eventVo.isNandu) {
+					addSixthScoreColumn();
+				}
+			}
+
+
+			private function addSixthScoreColumn():void {
+				var score6Column:DataGridGivenPointsColumn = new DataGridGivenPointsColumn();
+				score6Column.dataField = "score6";
+				score6Column.headerText = "Score 6";
+
+				var columns:Array = dataGrid.columns;
+				columns.splice(SCORE6_COLUMN_INDEX, 0, score6Column);
+				dataGrid.columns = columns;
 			}
 
 
@@ -113,7 +134,7 @@
 		]]>
 	</mx:Script>
 
-	<mx:DataGrid
+	<mx:DataGrid id="dataGrid"
 		width="100%" height="100%"
 		draggableColumns="false"
 		dataProvider="{scorings}"
