@@ -15,7 +15,7 @@ package com.serkanet.cmaticscoring.controllers {
 		override public function execute(notification:INotification):void {
 			var eventVo:EventVo = notification.getBody() as EventVo;
 
-			if (!mainScreenMediator.hasTab(eventVo.code)) {
+			if (!mainScreenMediator.hasTab(eventVo.tabName)) {
 				// Create component
 				var panel:EventScoringsPanel = new EventScoringsPanel();
 				panel.eventVo = eventVo;
@@ -33,7 +33,7 @@ package com.serkanet.cmaticscoring.controllers {
 				proxy.load("eventId", eventVo.id);
 			}
 
-			mainScreenMediator.bringTabUp(eventVo.code);
+			mainScreenMediator.bringTabUp(eventVo.tabName);
 		}
 
 

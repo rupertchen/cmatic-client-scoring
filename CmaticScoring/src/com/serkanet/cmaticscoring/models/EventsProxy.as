@@ -120,5 +120,23 @@ package com.serkanet.cmaticscoring.models {
 			sendNotification(SAVE_FAILURE);
 		}
 
+
+		public function hideFinishedEvents():void {
+			events.filterFunction = filterFinishedEvents;
+			events.refresh();
+		}
+
+
+		private function filterFinishedEvents(item:Object):Boolean {
+			var event:EventVo = item as EventVo;
+			return !event.isFinished;
+		}
+
+
+		public function showFinishedEvents():void {
+			events.filterFunction = null;
+			events.refresh();
+		}
+
 	}
 }

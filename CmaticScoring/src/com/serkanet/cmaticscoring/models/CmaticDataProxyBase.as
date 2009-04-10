@@ -81,10 +81,19 @@ package com.serkanet.cmaticscoring.models {
 
 
 		private function replaceCurrentData(vos:Array):void {
+			// ADOBE BUG:
+			// ArrayCollection.removeAll() will only remove things that are shown through the filter. The work around
+			// is to remove the filter and refresh before the call and restore the filter and refresh after the call.
+			// Throughout this process, the sort remains untouched.
+			var savedFilterFunction:Function = ArrayCollection(data).filterFunction;
+			ArrayCollection(data).filterFunction = null;
+			ArrayCollection(data).refresh();
 			ArrayCollection(data).removeAll();
 			for each (var vo:Object in vos) {
 				ArrayCollection(data).addItem(vo);
 			}
+			ArrayCollection(data).filterFunction = savedFilterFunction;
+			ArrayCollection(data).refresh();
 		}
 
 

@@ -30,6 +30,12 @@
 					sendEvent(SELECT_EVENT);
 				}
 			}
+
+
+			public function isShowFinishedSelected():Boolean {
+				return showFinishedButton.selected;
+			}
+
 		]]>
 	</mx:Script>
 
@@ -57,7 +63,7 @@
 	</mx:DataGrid>
 
 	<mx:ControlBar horizontalAlign="right">
-		<mx:Button label="Show Finished" toggle="true" click="sendEvent(TOGGLE_SHOW_FINISHED)"/>
+		<mx:Button id="showFinishedButton" label="Show Finished" toggle="true" click="sendEvent(TOGGLE_SHOW_FINISHED)"/>
 		<mx:Button label="Refresh" click="sendEvent(REFRESH_SCHEDULE)"/>
 	</mx:ControlBar>
 </mx:Panel>

@@ -2,7 +2,7 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:views="com.serkanet.cmaticscoring.views.components.*"
 	layout="absolute"
-	label="{eventVo.code}"
+	label="{eventVo.tabName}"
 	title="{eventVo.name}">
 
 	<mx:Script>
