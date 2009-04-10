@@ -122,14 +122,12 @@ package com.serkanet.cmaticscoring.models {
 
 
 		public function hideFinishedEvents():void {
-			events.filterFunction = filterFinishedEvents;
+			var filter:Function = function(item:Object):Boolean {
+				var event:EventVo = item as EventVo;
+				return !event.isFinished;
+			};
+			events.filterFunction = filter;
 			events.refresh();
-		}
-
-
-		private function filterFinishedEvents(item:Object):Boolean {
-			var event:EventVo = item as EventVo;
-			return !event.isFinished;
 		}
 
 

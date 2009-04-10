@@ -68,7 +68,7 @@
 				return minutes.toString()
 					+ ":"
 					+ ((seconds < 10) ? "0" : "")
-					+ seconds.toFixed(1);
+					+ seconds.toString();
 			}
 
 
@@ -89,13 +89,24 @@
 			}
 
 
+			private function onClickEndEvent():void {
+				var onClose:Function = function (event:CloseEvent):void {
+					if (Alert.YES == event.detail) {
+						sendEvent(END_EVENT);
+					}
+				};
+				Alert.show("Are you sure you want to end the event? This will save all pending changes and mark the event as finished.", "Warning",
+					Alert.YES | Alert.NO, null, onClose, null, Alert.NO);
+			}
+
+
 			private function onClickCancelChanges():void {
 				var onClose:Function = function (event:CloseEvent):void {
 					if (Alert.YES == event.detail) {
 						sendEvent(RELOAD_SCORINGS);
 					}
 				};
-				Alert.show("Are you sure you want to cancel all changes? There is no undo.", "Warning",
+				Alert.show("Are you sure you want to cancel all pending changes? There is no undo.", "Warning",
 					Alert.YES | Alert.NO, null, onClose, null, Alert.NO);
 			}
 
@@ -179,9 +190,10 @@
 			toolTip="Randomly shuffle the order of the competitors."/>
 		<mx:Button label="Re-Rank" click="sendEvent(COMPUTE_PLACEMENTS)"
 			toolTip="Re-rank all competitors break ties."/>
+		<mx:Spacer width="25"/>
 		<mx:Button label="Unlock" click="sendEvent(UNLOCK_EVENT)" enabled="{isLocked}"
 			toolTip="Unlocking an event will make the scores editable."/>
-		<mx:Button label="End" click="sendEvent(END_EVENT)" enabled="{isEndEventEnabled}"
+		<mx:Button label="End" click="onClickEndEvent()" enabled="{isEndEventEnabled}"
 			toolTip="Ending an event will rank the competitors and prevent further changes."/>
 		<mx:Spacer width="25"/>
 		<mx:Button label="Save" click="sendEvent(SAVE_SCORINGS)"

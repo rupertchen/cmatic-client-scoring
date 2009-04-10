@@ -48,7 +48,6 @@ package com.serkanet.cmaticscoring.views {
 
 
 		private function onToggleShowFinished(event:Event):void {
-			trace("toggle show finished status: " + panel.isShowFinishedSelected());
 			if (panel.isShowFinishedSelected()) {
 				proxy.showFinishedEvents();
 			} else {
