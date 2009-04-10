@@ -2,11 +2,12 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:views="com.serkanet.cmaticscoring.views.components.*"
 	layout="absolute"
-	label="{eventCode}"
-	title="{eventName}">
+	label="{eventVo.code}"
+	title="{eventVo.name}">
 
 	<mx:Script>
 		<![CDATA[
+			import com.serkanet.cmaticscoring.models.vos.EventVo;
 			import mx.events.CloseEvent;
 			import mx.controls.Alert;
 			import com.serkanet.cmaticscoring.models.vos.ScoringVo;
@@ -17,12 +18,16 @@
 			public static const SAVE_SCORINGS:String = "saveScorings";
 			public static const SHUFFLE_ORDERS:String = "shuffleOrders";
 			public static const END_EVENT:String = "endEvent";
+			public static const COMPUTE_PLACEMENTS:String = "computePlacements";
 
 			[Bindable]
 			public var eventCode:String;
 
 			[Bindable]
 			public var eventName:String;
+
+			[Bindable]
+			public var eventVo:EventVo;
 
 			[Bindable]
 			public var scorings:ArrayCollection;
@@ -169,8 +174,10 @@
 
 	<mx:ControlBar horizontalAlign="right">
 		<mx:Button label="Shuffle Order" click="sendEvent(SHUFFLE_ORDERS)"/>
+		<mx:Button label="Update Rankings" click="sendEvent(COMPUTE_PLACEMENTS)"/>
 		<mx:Button label="End Event" click="sendEvent(END_EVENT)"
 			toolTip="Ending an event will rank the competitors and prevent further changes."/>
+		<mx:Spacer width="25"/>
 		<mx:Button label="Save Changes" click="sendEvent(SAVE_SCORINGS)"/>
 		<mx:Button label="Cancel Changes" click="onClickCancelChanges()"/>
 		<mx:Button label="Close" click="sendEvent(CLOSE)"/>

@@ -21,6 +21,8 @@ package com.serkanet.cmaticscoring.views {
 			panel.addEventListener(EventScoringsPanel.RELOAD_SCORINGS, onReloadScorings);
 			panel.addEventListener(EventScoringsPanel.SAVE_SCORINGS, onSaveScorings);
 			panel.addEventListener(EventScoringsPanel.SHUFFLE_ORDERS, onShuffleOrders);
+			panel.addEventListener(EventScoringsPanel.COMPUTE_PLACEMENTS, onComputePlacements);
+			panel.addEventListener(EventScoringsPanel.END_EVENT, onEndEvent);
 			panel.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 
@@ -51,6 +53,17 @@ package com.serkanet.cmaticscoring.views {
 
 		private function onShuffleOrders(event:Event):void {
 			proxy.shuffle();
+		}
+
+
+		private function onComputePlacements(event:Event):void {
+			proxy.computePlacements();
+		}
+
+
+		private function onEndEvent(event:Event):void {
+			proxy.computePlacements();
+			//TODO: mark event as finished
 		}
 
 

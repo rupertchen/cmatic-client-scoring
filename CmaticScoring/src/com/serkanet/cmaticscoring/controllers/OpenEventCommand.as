@@ -18,8 +18,7 @@ package com.serkanet.cmaticscoring.controllers {
 			if (!mainScreenMediator.hasTab(eventVo.code)) {
 				// Create component
 				var panel:EventScoringsPanel = new EventScoringsPanel();
-				panel.eventCode = eventVo.code;
-				panel.eventName = eventVo.name;
+				panel.eventVo = eventVo;
 				mainScreenMediator.addTab(panel);
 
 				// Create a pair of proxy and mediator

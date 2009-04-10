@@ -37,35 +37,35 @@ package com.serkanet.cmaticscoring.models {
 
 
 		private function computeFinalScore():void {
-			scoring.finalScore = meritedScore - totalDeductions;
+			scoring.finalScore = getMeritedScore() - getTotalDeductions();
 		}
 
 
 		private function computeTieBreaker1():void {
 			// Greater is better
 			// The -1 is used so all tiebreakers are "greater is better"
-			scoring.tieBreaker1 = -1 * Math.abs(meanOfInvalidScores() - meritedScore);
+			scoring.tieBreaker1 = -1 * Math.abs(getMeanOfInvalidScores() - getMeritedScore());
 		}
 
 
 		private function computeTieBreaker2():void {
 			// Greater is better
-			scoring.tieBreaker2 = meanOfInvalidScores();
+			scoring.tieBreaker2 = getMeanOfInvalidScores();
 		}
 
 
 		private function computeTieBreaker3():void {
 			// Greater is better
-			scoring.tieBreaker3 = lowerInvalidScore;
+			scoring.tieBreaker3 = getLowerInvalidScore();
 		}
 
 
-		private function meanOfInvalidScores():Number {
-			return (lowerInvalidScore + upperInvalidScore) / 2;
+		private function getMeanOfInvalidScores():Number {
+			return roundScores((getLowerInvalidScore() + getUpperInvalidScore()) / 2);
 		}
 
 
-		private function get lowerInvalidScore():Number {
+		private function getLowerInvalidScore():Number {
 			var min:Number = NaN;
 			for each (var score:Number in scores) {
 				if (score == 0) {
@@ -82,7 +82,7 @@ package com.serkanet.cmaticscoring.models {
 		}
 
 
-		private function get upperInvalidScore():Number {
+		private function getUpperInvalidScore():Number {
 			var max:Number = NaN;
 			for each (var score:Number in scores) {
 				if (score == 0) {
@@ -99,27 +99,30 @@ package com.serkanet.cmaticscoring.models {
 		}
 
 
-		private function get meritedScore():Number {
-			var nonZeroCount:Number = 0;
+		private function getMeritedScore():Number {
+			var numNonZeroScores:Number = 0;
 			var sum:Number = 0;
 			for each (var score:Number in scores) {
 				if (score == 0) {
 					continue;
 				}
-				nonZeroCount += 1;
+				numNonZeroScores += 1;
 				sum += score;
 			}
 
-			if (nonZeroCount < 3) {
+			if (numNonZeroScores < 3) {
 				// Not enough numbers to determine a score.
-				return NaN;
+				return 0;
 			}
 
-			return (sum - lowerInvalidScore - upperInvalidScore) / (nonZeroCount - 2);
+			return roundScores((sum - getLowerInvalidScore() - getUpperInvalidScore()) / (numNonZeroScores - 2));
 		}
 
+		private function roundScores(score:Number):Number {
+			return Math.round(score * 1000) / 1000;
+		}
 
-		private function get totalDeductions():Number {
+		private function getTotalDeductions():Number {
 			return scoring.timeDeduction + scoring.otherDeduction;
 		}
 

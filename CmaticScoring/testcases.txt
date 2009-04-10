@@ -31,3 +31,5 @@ Event Scorings
 	Shuffle orders
 		Shuffle all competitors around
 		all rows that were moved will become red.
+	Placements will be computed when requested
+		Clicking on "update ranks" will re-rank all competitors

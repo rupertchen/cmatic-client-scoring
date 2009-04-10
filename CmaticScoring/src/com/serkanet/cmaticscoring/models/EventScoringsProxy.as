@@ -214,5 +214,59 @@ package com.serkanet.cmaticscoring.models {
 			}
 		}
 
+		public function computePlacements():void {
+			var placementSort:Sort = new Sort();
+			placementSort.fields = [
+				new SortField("finalScore", false, true, null),
+				new SortField("tieBreaker1", false, true, null),
+				new SortField("tieBreaker2", false, true, null),
+				new SortField("tieBreaker3", false, true, null)
+			];
+
+			// Create a separate collection to perform this sorting so that the view is unaffected by the placements
+			var scoringsByPlacement:ArrayCollection = new ArrayCollection();
+			// addAllItems() isn't avaiable yet?
+			//scoringsByPlacement.addAllItems(scorings);
+			addAllItems(scorings, scoringsByPlacement);
+			scoringsByPlacement.sort = placementSort;
+			scoringsByPlacement.refresh();
+
+			var previousScoring:ScoringVo = null;
+			var numPlaced:Number = 0;
+
+			for each (var scoring:ScoringVo in scoringsByPlacement) {
+				if (areScoresTied(scoring, previousScoring)) {
+					scoring.placement = previousScoring.placement;
+				} else {
+					scoring.placement = numPlaced + 1;
+				}
+
+				previousScoring = scoring;
+				numPlaced++;
+			}
+		}
+
+
+		private function addAllItems(source:ArrayCollection, destination:ArrayCollection):void {
+			for each (var item:Object in source) {
+				destination.addItem(item);
+			}
+		}
+
+
+		private function areScoresTied(x:ScoringVo, y:ScoringVo):Boolean {
+			if (x == y) {
+				return true;
+			}
+			if (x == null || y == null) {
+				return false;
+			}
+
+			return x.finalScore == y.finalScore
+				&& x.tieBreaker1 == y.tieBreaker1
+				&& x.tieBreaker2 == y.tieBreaker2
+				&& x.tieBreaker3 == x.tieBreaker3;
+		}
+
 	}
 }

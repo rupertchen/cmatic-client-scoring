@@ -4,8 +4,6 @@ package com.serkanet.cmaticscoring.views {
 	import com.serkanet.cmaticscoring.views.components.EventSchedulePanel;
 
 	import flash.events.Event;
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
 
 	import org.puremvc.as3.patterns.mediator.Mediator;
 
