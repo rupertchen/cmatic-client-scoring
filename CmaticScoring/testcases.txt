@@ -1,4 +1,4 @@
-App Startup
+Application Startup
 	Load all "static" data at start up
 
 IdScreen
@@ -28,3 +28,6 @@ Event Scorings
 		Display agrees after carrying over any extra seconds
 	Add invalid time
 		Consider it null. Will show --:-- temporarily, but load as 0 next time
+	Shuffle orders
+		Shuffle all competitors around
+		all rows that were moved will become red.

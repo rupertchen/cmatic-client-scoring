@@ -195,5 +195,24 @@ package com.serkanet.cmaticscoring.models {
 			entry.placement = scoring.placement;
 			return entry;
 		}
+
+
+		public function shuffle():void {
+			// This shuffling is not uniformly random, but it's good enough for now
+			var max_index:Number = scorings.length - 1 ;
+			for (var transpose_index:Number = 0; transpose_index < scorings.length; transpose_index++) {
+				var random:Number = Math.round(Math.random() * max_index);
+
+				var scoring1:ScoringVo = scorings[transpose_index] as ScoringVo;
+				var scoring2:ScoringVo = scorings[random] as ScoringVo;
+
+				var oldOrder1:Number = scoring1.order;
+				var oldOrder2:Number = scoring2.order;
+
+				scoring1.order = oldOrder2;
+				scoring2.order = oldOrder1;
+			}
+		}
+
 	}
 }

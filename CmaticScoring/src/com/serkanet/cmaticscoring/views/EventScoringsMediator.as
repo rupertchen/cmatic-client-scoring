@@ -20,6 +20,7 @@ package com.serkanet.cmaticscoring.views {
 			panel.addEventListener(EventScoringsPanel.CLOSE, onClose);
 			panel.addEventListener(EventScoringsPanel.RELOAD_SCORINGS, onReloadScorings);
 			panel.addEventListener(EventScoringsPanel.SAVE_SCORINGS, onSaveScorings);
+			panel.addEventListener(EventScoringsPanel.SHUFFLE_ORDERS, onShuffleOrders);
 			panel.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 
@@ -45,6 +46,11 @@ package com.serkanet.cmaticscoring.views {
 
 		private function onSaveScorings(event:Event):void {
 			proxy.save();
+		}
+
+
+		private function onShuffleOrders(event:Event):void {
+			proxy.shuffle();
 		}
 
 
