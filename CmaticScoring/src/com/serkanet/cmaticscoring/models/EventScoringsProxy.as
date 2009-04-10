@@ -170,7 +170,7 @@ package com.serkanet.cmaticscoring.models {
 		}
 
 
-		public function faultSave(d:Object):void {
+		public function faultSave(faultData:Object):void {
 			trace("fault saving scorings: " + proxyName);
 			sendNotification(SAVE_FAILURE);
 		}

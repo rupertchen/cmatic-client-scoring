@@ -1,9 +1,16 @@
 package com.serkanet.cmaticscoring.models {
+	import com.adobe.serialization.json.JSON;
+	import com.serkanet.cmaticscoring.models.delegates.SaveCmaticDataDelegate;
+	import com.serkanet.cmaticscoring.models.responders.EventsProxySaveResponder;
 	import com.serkanet.cmaticscoring.models.vos.EventVo;
 
 	import mx.collections.ArrayCollection;
 	import mx.collections.Sort;
 	import mx.collections.SortField;
+	import mx.rpc.Fault;
+	import mx.rpc.events.FaultEvent;
+
+	import org.puremvc.as3.utilities.flex.config.model.ConfigProxy;
 
 
 	public class EventsProxy extends CmaticDataProxyBase {
@@ -11,6 +18,8 @@ package com.serkanet.cmaticscoring.models {
 		public static const NAME:String = "Events";
 		public static const LOAD_SUCCESS:String = NAME + "/load/success";
 		public static const LOAD_FAILURE:String = NAME + "/load/failure";
+		public static const SAVE_SUCCESS:String = NAME + "/save/success";
+		public static const SAVE_FAILURE:String = NAME + "/save/failure";
 
 		private static const TYPE:String = "event";
 
@@ -78,6 +87,37 @@ package com.serkanet.cmaticscoring.models {
 
 		public function get events():ArrayCollection {
 			return data as ArrayCollection;
+		}
+
+
+		public function saveEvent(event:EventVo):void {
+			// Limiting saves to the isFinished property
+			var saveEntry:Object = new Object();
+			saveEntry.id = event.id;
+			saveEntry.isFinished = event.isFinished;
+
+			var configProxy:AppConfigProxy = facade.retrieveProxy(ConfigProxy.NAME) as AppConfigProxy;
+			var delegate:SaveCmaticDataDelegate = new SaveCmaticDataDelegate(configProxy.appConfig.setService, TYPE, [saveEntry]);
+			delegate.save(new EventsProxySaveResponder(this));
+		}
+
+
+		public function resultSave(resultData:Object):void {
+			var result:Object = JSON.decode(resultData.result);
+			if (result.success) {
+				// It's debatable whether it is better to force a reload so problems are noticed sooner or if it is better
+				// to not reload so any temporary corruption does not also corrupt the client's local copy.
+				reload();
+			} else {
+				var faultMessage:Fault = new Fault(SAVE_FAILURE, "Save Failed");
+				fault(new FaultEvent(FaultEvent.FAULT, false, false, faultMessage));
+			}
+		}
+
+
+		public function faultSave(faultData:Object):void {
+			trace("fault saving event: " + proxyName);
+			sendNotification(SAVE_FAILURE);
 		}
 
 	}

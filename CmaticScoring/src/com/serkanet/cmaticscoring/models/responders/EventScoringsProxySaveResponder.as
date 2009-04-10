@@ -20,8 +20,8 @@ package com.serkanet.cmaticscoring.models.responders {
 		}
 
 
-		public function fault(data:Object):void {
-			proxy.faultSave(data);
+		public function fault(info:Object):void {
+			proxy.faultSave(info);
 		}
 
 	}

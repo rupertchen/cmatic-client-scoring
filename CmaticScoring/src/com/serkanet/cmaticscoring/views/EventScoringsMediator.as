@@ -1,5 +1,6 @@
 package com.serkanet.cmaticscoring.views {
 	import com.serkanet.cmaticscoring.models.EventScoringsProxy;
+	import com.serkanet.cmaticscoring.models.EventsProxy;
 	import com.serkanet.cmaticscoring.views.components.EventScoringsPanel;
 
 	import flash.events.Event;
@@ -17,12 +18,15 @@ package com.serkanet.cmaticscoring.views {
 			panel.scorings = proxy.scorings;
 
 			// attach event listeners to the component
-			panel.addEventListener(EventScoringsPanel.CLOSE, onClose);
-			panel.addEventListener(EventScoringsPanel.RELOAD_SCORINGS, onReloadScorings);
-			panel.addEventListener(EventScoringsPanel.SAVE_SCORINGS, onSaveScorings);
 			panel.addEventListener(EventScoringsPanel.SHUFFLE_ORDERS, onShuffleOrders);
 			panel.addEventListener(EventScoringsPanel.COMPUTE_PLACEMENTS, onComputePlacements);
+			panel.addEventListener(EventScoringsPanel.UNLOCK_EVENT, onUnlockEvent);
 			panel.addEventListener(EventScoringsPanel.END_EVENT, onEndEvent);
+
+			panel.addEventListener(EventScoringsPanel.SAVE_SCORINGS, onSaveScorings);
+			panel.addEventListener(EventScoringsPanel.RELOAD_SCORINGS, onReloadScorings);
+			panel.addEventListener(EventScoringsPanel.CLOSE, onClose);
+
 			panel.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 
@@ -63,7 +67,20 @@ package com.serkanet.cmaticscoring.views {
 
 		private function onEndEvent(event:Event):void {
 			proxy.computePlacements();
-			//TODO: mark event as finished
+			proxy.save();
+
+			panel.eventVo.isFinished = true;
+			panel.isLocked = true;
+			panel.isEndEventEnabled = false;
+
+			var eventsProxy:EventsProxy = facade.retrieveProxy(EventsProxy.NAME) as EventsProxy;
+			eventsProxy.saveEvent(panel.eventVo);
+		}
+
+
+		private function onUnlockEvent(event:Event):void {
+			panel.isLocked = false;
+			panel.isEndEventEnabled = true;
 		}
 
 

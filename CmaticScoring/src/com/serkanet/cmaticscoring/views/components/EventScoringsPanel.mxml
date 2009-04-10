@@ -13,24 +13,26 @@
 			import com.serkanet.cmaticscoring.models.vos.ScoringVo;
 			import mx.collections.ArrayCollection;
 
-			public static const CLOSE:String = "close";
-			public static const RELOAD_SCORINGS:String = "reloadScorings";
-			public static const SAVE_SCORINGS:String = "saveScorings";
 			public static const SHUFFLE_ORDERS:String = "shuffleOrders";
-			public static const END_EVENT:String = "endEvent";
 			public static const COMPUTE_PLACEMENTS:String = "computePlacements";
+			public static const UNLOCK_EVENT:String = "unlockEvent";
+			public static const END_EVENT:String = "endEvent";
 
-			[Bindable]
-			public var eventCode:String;
-
-			[Bindable]
-			public var eventName:String;
+			public static const SAVE_SCORINGS:String = "saveScorings";
+			public static const RELOAD_SCORINGS:String = "reloadScorings";
+			public static const CLOSE:String = "close";
 
 			[Bindable]
 			public var eventVo:EventVo;
 
 			[Bindable]
 			public var scorings:ArrayCollection;
+
+			[Bindable]
+			public var isLocked:Boolean;
+
+			[Bindable]
+			public var isEndEventEnabled:Boolean;
 
 
 			public function remove():void {
@@ -104,7 +106,7 @@
 		width="100%" height="100%"
 		draggableColumns="false"
 		dataProvider="{scorings}"
-		editable="true">
+		editable="{!isLocked}">
 		<mx:columns>
 			<mx:DataGridColumn
 				dataField="order"
@@ -173,13 +175,20 @@
 	</mx:DataGrid>
 
 	<mx:ControlBar horizontalAlign="right">
-		<mx:Button label="Shuffle Order" click="sendEvent(SHUFFLE_ORDERS)"/>
-		<mx:Button label="Update Rankings" click="sendEvent(COMPUTE_PLACEMENTS)"/>
-		<mx:Button label="End Event" click="sendEvent(END_EVENT)"
+		<mx:Button label="Shuffle" click="sendEvent(SHUFFLE_ORDERS)"
+			toolTip="Randomly shuffle the order of the competitors."/>
+		<mx:Button label="Re-Rank" click="sendEvent(COMPUTE_PLACEMENTS)"
+			toolTip="Re-rank all competitors break ties."/>
+		<mx:Button label="Unlock" click="sendEvent(UNLOCK_EVENT)" enabled="{isLocked}"
+			toolTip="Unlocking an event will make the scores editable."/>
+		<mx:Button label="End" click="sendEvent(END_EVENT)" enabled="{isEndEventEnabled}"
 			toolTip="Ending an event will rank the competitors and prevent further changes."/>
 		<mx:Spacer width="25"/>
-		<mx:Button label="Save Changes" click="sendEvent(SAVE_SCORINGS)"/>
-		<mx:Button label="Cancel Changes" click="onClickCancelChanges()"/>
-		<mx:Button label="Close" click="sendEvent(CLOSE)"/>
+		<mx:Button label="Save" click="sendEvent(SAVE_SCORINGS)"
+			toolTip="Save all changes."/>
+		<mx:Button label="Cancel" click="onClickCancelChanges()"
+			toolTip="Ignore all changes and reload."/>
+		<mx:Button label="Close" click="sendEvent(CLOSE)"
+			toolTip="Close this tab."/>
 	</mx:ControlBar>
 </mx:Panel>

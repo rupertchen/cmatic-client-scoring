@@ -19,6 +19,8 @@ package com.serkanet.cmaticscoring.controllers {
 				// Create component
 				var panel:EventScoringsPanel = new EventScoringsPanel();
 				panel.eventVo = eventVo;
+				panel.isLocked = true;
+				panel.isEndEventEnabled = !eventVo.isFinished;
 				mainScreenMediator.addTab(panel);
 
 				// Create a pair of proxy and mediator
